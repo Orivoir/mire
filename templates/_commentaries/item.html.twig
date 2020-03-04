@@ -1,0 +1,38 @@
+<li class="commentary-item">
+
+    <section class="commentary-wrap">
+
+        <header>
+
+            <h1>
+                <a href="{{path("app_user_profil" , {
+                    "username": commentary.user.username
+                } )}}">
+                    {{commentary.user.username}}
+                </a>
+            </h1>
+
+            <blockquote>
+                send at {{commentary.sendAt|date('d/m/Y H:i')}}
+            </blockquote>
+
+        </header>
+
+        <aside>
+
+            <p>
+                {{commentary.content}}
+            </p>
+
+        </aside>
+
+        <footer>
+
+            {# {% set item = commentary %} #}
+            {# include "_options/item.html.twig" #}
+
+        </footer>
+
+    </section>
+
+</li>

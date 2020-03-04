@@ -1,0 +1,29 @@
+<section class="container flash-wrap">
+
+    <ul>
+        {% for message in app.flashes('success')  %}
+            <li>
+                <div
+                    class="badge badge-success"
+                >
+                    {{message}}
+                    &nbsp;
+                    <i class="fas fa-check"></i>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <ul>
+        {% for message in app.flashes('error')  %}
+            <li>
+                <div
+                    class="badge badge-danger"
+                >
+                    {{message}}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+</section>

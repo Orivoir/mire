@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
@@ -15,11 +18,13 @@ class Article
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("public")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("public")
      */
     private $title;
 
@@ -63,6 +68,11 @@ class Article
      * @ORM\OneToMany(targetEntity="App\Entity\Commentary", mappedBy="article", orphanRemoval=true)
      */
     private $commentaries;
+
+    public function getSlug(): ?string {
+
+        return ( new Slugify() )->slugify( $this->title ) ;
+    }
 
     public function __construct()
     {
@@ -131,6 +141,10 @@ class Article
     public function setIsRemove(bool $isRemove): self
     {
         $this->isRemove = $isRemove;
+
+        if( !!$this->isRemove ) {
+            $this->removeAt = new \DateTime() ;
+        }
 
         return $this;
     }

@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
  */
 class User implements UserInterface
 {
@@ -55,7 +57,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isValid;
+    private $isValid = false;
 
     /**
      * @ORM\Column(type="datetime")
@@ -102,12 +104,38 @@ class User implements UserInterface
      */
     private $commentaries;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="author", orphanRemoval=true)
+     */
+    private $messages;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $blockers = [];
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Contact", mappedBy="user")
+     */
+    private $contacts;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $avatarName=true;
+
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->commentaries = new ArrayCollection();
-        $this->createAt = new \DateTime();
-        $this->token = \md5("le chat aime les arbres :-)") ;
+        $this->createAt = new \DateTime() ;
+        $this->token = \md5( \str_shuffle( "le chat aime les arbres :-)" ) ) ;
+        $this->messages = new ArrayCollection();
+
+        $this->messageBox = new MessageBox() ;
+        $this->messageBox->setUser( $this ) ;
+        $this->contacts = new ArrayCollection();
     }
 
     public function getPlainPassword(): ?string
@@ -264,6 +292,11 @@ class User implements UserInterface
     {
         $this->isRemove = $isRemove;
 
+        if(!!$this->isRemove ) {
+
+            $this->removeAt = new \DateTime() ;
+        }
+
         return $this;
     }
 
@@ -364,6 +397,33 @@ class User implements UserInterface
     }
 
     /**
+     * @return Collection|Article[]
+     */
+    public function getSubjects() {
+
+        $commentaries = $this->getCommentaries() ;
+
+        $articles = new ArrayCollection() ;
+
+        foreach( $commentaries as $commentary ) {
+
+            $article = $commentary->getArticle() ;
+
+            if(
+                !$articles->contains( $article ) &&
+                !$article->getIsRemove()
+            ) {
+
+                $articles[] = $article ;
+            }
+
+        }
+
+        return $articles ;
+
+    }
+
+    /**
      * @return Collection|Commentary[]
      */
     public function getCommentaries(): Collection
@@ -392,5 +452,120 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->contains($message)) {
+            $this->messages->removeElement($message);
+            // set the owning side to null (unless already changed)
+            if ($message->getAuthor() === $this) {
+                $message->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * check if an user is already blocked
+     */
+    public function isBlocked( User $user ): bool {
+
+        $id = $user->getId() ;
+        $blockers = $this->getBlockers() ;
+
+        $isBlock = false ;
+
+        foreach( $blockers as $blocker ) {
+
+            if( $blocker == $id ) {
+
+                $isBlock = true ;
+            }
+        }
+
+        return $isBlock ;
+    }
+
+    /**
+     * contains list id user blocked by this user
+     */
+    public function getBlockers(): ?array
+    {
+        return $this->blockers;
+    }
+
+    public function setBlockers(?array $blockers): self
+    {
+        $this->blockers = $blockers;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Contact[]
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): self
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts[] = $contact;
+            $contact->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): self
+    {
+        if ($this->contacts->contains($contact)) {
+            $this->contacts->removeElement($contact);
+            // set the owning side to null (unless already changed)
+            if ($contact->getUser() === $this) {
+                $contact->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAvatarName(): ?string
+    {
+        return $this->avatarName;
+    }
+
+    public function setAvatarName(string $avatarName): self
+    {
+        $this->avatarName = $avatarName;
+
+        return $this;
+    }
+
+    public function getAvatarPath() {
+
+        return "/assets" . (!!$this->avatarName ? '/uploads/avatar/' . $this->avatarName : '/images/pawn.svg' ) ;
     }
 }

@@ -64,4 +64,117 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
     */
+
+    public function createStaticQuery( string $constraint , ?int $limit ) {
+
+        $query = $this
+            ->createQueryBuilder('u')
+            ->andWhere( $constraint )
+        ;
+
+        if( is_int( $limit ) && $limit > 0 ) {
+
+            $query->setMaxResults( $limit ) ;
+        }
+
+        return $query ;
+    }
+
+    public function getAllRemoves( ?int $limit ) {
+
+        return $this
+            ->createStaticQuery( 'u.isRemove = true' , $limit )
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getAllVisible( ?int $limit ) {
+
+        return $this
+            ->createStaticQuery( 'u.isRemove = false' , $limit )
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getAllPublicEmail( ?int $limit ) {
+
+        return $this
+            ->createStaticQuery( 'u.isPublicEmail = true' , $limit )
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getAllPublicProfil( ?int $limit ) {
+
+        return $this
+            ->createStaticQuery( 'u.isPublicProfil = true' , $limit )
+            ->getQuery()
+            ->getResult()
+        ;
+
+    }
+
+    public function getAllValid( ?int $limit ) {
+
+        return $this
+            ->createStaticQuery( 'u.isValid = true' , $limit )
+            ->getQuery()
+            ->getResult()
+        ;
+
+    }
+
+    public function getAllInvalid( ?int $limit ) {
+
+        return $this
+            ->createStaticQuery( 'u.isValid = false' , $limit )
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getAllPrivateEmail( ?int $limit ) {
+
+        return $this
+            ->createStaticQuery( 'u.isPublicEmail = false' , $limit )
+            ->getQuery()
+            ->getResult()
+        ;
+
+    }
+
+    public function getAllPrivateProfil( ?int $limit ) {
+
+        return $this
+            ->createStaticQuery( 'u.isPublicProfil = false' , $limit )
+            ->getQuery()
+            ->getResult()
+        ;
+
+    }
+
+    public function getAllVisibleSearch( string $search ) {
+
+        $users = $this->createQueryBuilder('u')
+            ->andWhere('u.username LIKE :username')
+            ->andWhere('u.isRemove = false')
+            ->andWhere('u.isPublicProfil = true')
+            ->setParameter('username', '%'.$search.'%')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        $usersID = [] ;
+
+        foreach( $users as $user ) {
+
+            $usersID[] = $user->getId() ;
+        }
+
+        return $usersID ;
+    }
 }

@@ -1,0 +1,179 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    my settings
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset("/assets/css/settings.css")}}">
+{% endblock %}
+
+{% block body %}
+
+    <section class="settings-wrap container">
+
+        <header>
+            <h1>craft account</h1>
+
+            {% if app.user.email == NULL %}
+                <blockquote>
+                    send your email for activate your account
+                </blockquote>
+            {% endif %}
+        </header>
+
+        {{form_start(settingsForm, {
+            "attr" : {
+                "class": "form-container"
+            }
+        })}}
+
+            <div class="form-group {{app.user.isValid != false ? "hide": ""}}">
+                {{form_row( settingsForm.email , {
+                    "label" : "email" ,
+                    "attr" : {
+                        "class": "form-control" ,
+                        "autofocus": true
+                    }
+                } )}}
+            </div>
+
+            {% if app.user.isValid %}
+                <div>
+                    <p>
+                        {{app.user.email}}
+                    </p>
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                {{form_row( settingsForm.fname , {
+                    "label": "first name" ,
+                    "attr" : {
+                        "class": "form-control",
+                        "autofocus": true
+                    }
+                } )}}
+            </div>
+
+            <div class="form-group">
+                {{form_row( settingsForm.name , {
+                    "label": "last name" ,
+                    "attr" : {
+                        "class": "form-control" ,
+                    }
+                } )}}
+            </div>
+
+            <div>
+
+                <figure>
+
+                    <figcaption>
+                        {{form_row( settingsForm.avatar , {
+                            "attr" : {
+                                "class": "form-control hide"
+                            }
+                        } )}}
+                    </figcaption>
+
+                    <button
+                        type="button"
+                        data-propagation-click="#settings_form_avatar"
+                    >
+                        <img
+                            src="{{ asset( app.user.avatarPath )  }}"
+                            alt="avatar"
+                            class="avatar-change"
+                            width="150"
+                            height="150"
+                        >
+                    </button>
+
+                </figure>
+            </div>
+
+            <div class="form-checkbox">
+                {{form_row( settingsForm.isPublicEmail , {
+                    "attr" : {
+                        "class": "form-control"
+                    }
+                } )}}
+            </div>
+
+            <div class="form-checkbox">
+                {{form_row( settingsForm.isPublicProfil , {
+                    "attr" : {
+                        "class": "form-control"
+                    }
+                } )}}
+            </div>
+
+            <div class="action-settings">
+
+                <div>
+                    <button
+                        type="submit"
+                        class="btn green"
+                    >
+                        update
+                    </button>
+                </div>
+
+                <div>
+                    <button
+                        type="button"
+                        id="delete-user"
+                        data-target="/u/remove/{{app.user.token}}"
+                        data-method="DELETE"
+                        class="btn red"
+                    >
+                        remove  account
+                    </button>
+                </div>
+
+            </div>
+
+        {{form_end(settingsForm)}}
+
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{asset("/assets/js/account-remove.js")}}"></script>
+    <script src="{{asset("/assets/js/handler-file.js")}}"></script>
+    <script>
+
+        const avatarHandler = new HandlerFile({
+
+            input: document.querySelector('#settings_form_avatar') ,
+
+            onValidChange: function(filename , file) {
+
+                avatarHandler.read() ;
+            } ,
+
+            onRead: function( blob ) {
+
+                document.querySelector('.avatar-change').src = blob ;
+            }
+        }) ;
+
+        avatarHandler.addTypes(
+            "image/png" ,
+            "image/svg+xml" ,
+            "image/jpeg" ,
+            "image/gif"
+        ) ;
+
+        avatarHandler.maxSize = 12.5;//MO
+
+        if( ACCOUNT_IS_VALID ) {
+
+            const inputEmail = document.querySelector('#settings_form_email') ;
+            inputEmail.parentNode.parentNode.parentNode.removeChild( inputEmail.parentNode.parentNode ) ;
+        }
+
+    </script>
+{% endblock %}

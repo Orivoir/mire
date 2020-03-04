@@ -1,0 +1,94 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+
+    <section>
+
+        <header>
+
+            <h1>{{host.username}}</h1>
+
+            <blockquote>
+                member from {{host.createAt|date("d/m/Y")}}
+            </blockquote>
+
+            {% if host.fname or host.name %}
+                <div>
+
+                    <h2>
+                        {{host.fname|lower|capitalize}}&nbsp;
+                        {{host.name|upper}}
+                    </h2>
+                </div>
+            {% endif %}
+
+        </header>
+
+        <aside>
+
+            {% if host.isPublicEmail %}
+
+                <p>
+                    <a href="mailto:{{host.email}}">
+                        contacter {{host.username}}
+                    </a>
+                </p>
+
+            {% endif %}
+
+        </aside>
+
+        <footer>
+
+            {% if app.user.isValid != NULL %}
+                <button
+                    type="button"
+                    class="btn blue send-private-mssg"
+                >
+                    send private message
+                </button>
+
+                {% include "_form/private-message.html.twig" %}
+
+            {% else %}
+                <p>
+                    validate your account for send an private message
+                </p>
+
+                <button
+                    type="button"
+                    class="btn green mail-activate"
+                >
+                    mail activate account
+                </button>
+            {% endif %}
+
+        </footer>
+
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+
+        ( () => {
+
+            const sendPrivateMssgBtn = document.querySelector('.send-private-mssg') ;
+            const wrapPrivateMssg = document.querySelector('.form-private-message') ;
+
+            sendPrivateMssgBtn.addEventListener('click' , () => {
+
+                wrapPrivateMssg.classList.toggle( 'hide-o' ) ;
+            } ) ;
+
+        } )() ;
+
+    </script>
+
+{% endblock %}

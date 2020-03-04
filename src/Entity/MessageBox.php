@@ -54,6 +54,44 @@ class MessageBox
     /**
      * @return Collection|Message[]
      */
+    public function getMessagesVisible(): Collection {
+
+        $messagesVisible = new ArrayCollection() ;
+        $messages = $this->getMessages() ;
+
+        foreach( $messages as $message ) {
+
+            if( !$message->getIsRemove() ) {
+
+                $messagesVisible[] = $message ;
+            }
+        }
+
+        return $messagesVisible ;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getNewMessages(): Collection {
+
+        $messagesNotRead = new ArrayCollection() ;
+        $messages = $this->getMessages() ;
+
+        foreach( $messages as $message ) {
+
+            if( !$message->getIsRead() ) {
+
+                $messagesNotRead[] = $message ;
+            }
+        }
+
+        return $messagesNotRead ;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
     public function getMessages(): Collection
     {
         return $this->messages;

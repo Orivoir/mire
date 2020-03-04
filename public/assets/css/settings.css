@@ -1,0 +1,26 @@
+h1 {
+
+    text-align: center;
+}
+
+.settings-wrap .action-settings {
+
+    margin-top: 13vh;
+    margin-bottom: 3vh;
+}
+
+.action-settings {
+
+    display: flex;
+    justify-content: space-between;
+}
+
+@media screen and ( max-width: 800px ) , (max-height: 600px) {
+
+    .settings-wrap .action-settings div button {
+
+        padding: 3vh 1.5vw;
+        font-size: 18px;
+        letter-spacing: .1rem;
+    }
+}

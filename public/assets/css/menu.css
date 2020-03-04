@@ -1,0 +1,297 @@
+nav {
+
+    position: relative;
+    width: 100%;
+    padding: 1.2vh 0;
+    display: flex;
+    align-items: center;
+    background: rgb( 42,42,42 ) ;
+}
+
+.avatar-menu {
+
+    width: 65px;
+    height: auto;
+    max-height: 110px ;
+}
+
+nav h1 img {
+
+    transform: scale( .85 ) rotate( 0 ) ;
+    transition: transform .42s ease-in-out ;
+}
+
+nav h1 img:hover {
+
+    /* polymorph effect */
+    transform: scale( 1 ) rotate( 360deg ) ;
+}
+
+nav h1 {
+
+    margin-left: 1.42vw ;
+}
+
+nav button {
+
+    color: #fff;
+}
+
+@keyframes load {
+
+    from {
+
+        transform: scaleX( 0 ) ;
+    }
+
+    42% {
+
+        transform: scaleX( .31 ) ;
+    }
+
+    72% {
+
+
+        transform: scaleX( .85 ) ;
+    }
+
+    to {
+
+        transform: scaleX( 1 ) ;
+        background: #2ecc71;
+    }
+}
+
+nav::before {
+
+    content: "";
+
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+
+    transform-origin: top left;
+    transform: scaleX( 0 ) ;
+
+    height: 2.3vh;
+    background:  #e74c3c;
+    animation: load 2.65s ease-in-out forwards;
+}
+
+nav ul li a {
+
+    font-size: 28px ;
+}
+
+nav .search-icon-header {
+
+    margin-right: 4vw;
+}
+
+nav .search-icon i {
+    font-size: 28px;
+    color: #fff;
+    cursor: pointer;
+}
+
+nav ul {
+
+    flex: 1;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+nav ul li a {
+
+    background: none;
+    padding: 1vh;
+    transition: .13s ease-in-out;
+    border-radius: 2px;
+}
+
+
+nav ul li a:hover {
+
+    background: rgba( 255,255,255,.18 ) ;
+}
+
+nav ul.open {
+
+    display: block;
+}
+
+#content-search {
+
+    display: none;
+}
+
+
+#content-search.open {
+
+    background-image: url('.././images/journal-bg.jpg')!important ;
+    background-color: rgb( 42,42,42 ) ;
+    background-size: cover;
+    display: block;
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom: 0;
+    z-index: 25;
+}
+
+#content-search form {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+
+    top: 50%;
+    width: 100%;
+
+    transform: translateY(-50%) ;
+}
+
+
+#content-search.result form {
+
+    top: 2%;
+    transform: translateY(0%) ;
+}
+
+
+#content-search form div button {
+
+    min-width: 60px;
+}
+
+#content-search.result form div button {
+
+    min-width: 42px;
+}
+
+#content-search form div:nth-child(2) {
+
+    width: 60%;
+}
+
+#content-search form div button {
+
+    padding: 2vh 1.5vw;
+    font-size: 25px;
+}
+
+#content-search.result form div button {
+
+    padding: 1.25vh 1vw;
+}
+
+#content-search form div input {
+    width: 100%;
+    padding: 2vh 0vw;
+    padding-left: 1vw;
+    font-size: 22px;
+}
+
+#content-result {
+
+    display: flex;
+}
+
+#content-result ul {
+
+    width: 50%;
+}
+
+nav ul li.message-item a {
+
+    position: relative;
+}
+
+.new-messages-count {
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-block;
+    background: #2ea2ef;
+    padding: 0 10px;
+    transform: translate(25% , -25%) ;
+    border-radius: 50%;
+}
+
+@media screen and (max-width: 1100px) {
+
+    nav {
+
+        flex-direction: column;
+    }
+
+    nav ul {
+
+        width: 100%;
+        display: none;
+    }
+
+    nav ul.open {
+
+        display: block;
+        width: 100%;
+        padding-bottom: 1.3vh;
+    }
+
+    nav ul li {
+
+        width: 85%;
+        margin: auto;
+    }
+
+    nav ul li a {
+
+        background: rgba( 255,255,255,.09 );
+        margin: .8vh 0;
+        font-size: 26px;
+        width: 100%;
+    }
+
+    .search-icon-header {
+
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        margin: 0;
+        padding: 15px;
+        border-radius: 50%;
+        background: rgb( 42,42,42 ) ;
+    }
+}
+
+/* small-screen */
+@media screen and (max-width:850px) {
+
+    nav ul li img {
+
+        width: 42px;
+        height: 42px;
+    }
+
+}
+@media screen and (max-width:600px) {
+
+    #content-search.open {
+
+        background-image: none!important;
+        background-color: rgb( 42,42,42 ) ;
+    }
+
+    #content-search form div input {
+
+        font-size: 18px;
+    }
+
+}

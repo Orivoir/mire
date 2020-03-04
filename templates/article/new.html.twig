@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    {{ form_start( articleForm ) }}
+        {# {{ form_row(articleForm.username) }}
+        {{ form_row(articleForm.plainPassword) }}
+        {{ form_row(articleForm.agreeTerms) }} #}
+
+        {{ form_widget( articleForm ) }}
+
+        <button type="submit">create</button>
+
+    {{ form_end(articleForm) }}
+
+{% endblock %}

@@ -1,0 +1,73 @@
+<li class="article-item {{article.id % 2 == 0 ? "even"}}">
+
+    <section
+        id="article-{{article.id}}"
+    >
+
+        <header>
+
+            <h1>
+                <a href="{{path("app_article_details" , {
+                    "slug": article.slug ,
+                    "id": article.id
+                } )}}"
+                >
+                    {{article.title}}
+                </a>
+            </h1>
+
+            <blockquote>
+                publish
+                {{article.createAt|date('d/m/Y H:i:s')}}
+            </blockquote>
+
+            {% if isAuthor is not defined or isAuthor == false %}
+                <h2>
+                    Author
+                    <a href="{{path("app_user_profil" , {
+                        "username": article.user.username
+                    } )}}">
+                        {{ article.user.username }}
+                    </a>
+                </h2>
+            {% endif %}
+
+        </header>
+
+        <aside>
+
+            <p>
+                {{article.content|slice( 0 , 15 ) }} ...
+            </p>
+
+            <div>
+                <p>
+                    {{article.commentaries|length}} commentar{{ article.commentaries|length > 1 ? "ies": "y" }}
+                </p>
+
+                <p>
+                {% if isAuthor is not defined or isAuthor == false %}
+                    <a href="{{path("app_article_details" , {
+                        "slug": article.slug ,
+                        "id": article.id
+                    } )}}"
+                    class="btn blue-outline"
+                    >
+                        learn more
+                    </a>
+                {% endif %}
+                </p>
+            </div>
+
+        </aside>
+
+        {% if isAuthor is defined and isAuthor == true %}
+
+            <footer>
+                {% include "_menu/article.html.twig" %}
+            </footer>
+        {% endif %}
+
+    </section>
+
+</li>

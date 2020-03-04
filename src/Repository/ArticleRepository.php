@@ -47,4 +47,90 @@ class ArticleRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function createStaticQuery( string $constraint , ?int $limit ) {
+
+        $query = $this
+            ->createQueryBuilder('a')
+            ->andWhere( $constraint )
+        ;
+
+        if( is_int( $limit ) && $limit > 0 ) {
+
+            $query->setMaxResults( $limit ) ;
+        }
+
+        return $query ;
+    }
+
+    public function getAllRemoves( ?int $limit ) {
+
+        return $this
+            ->createStaticQuery( 'a.isRemove = true' , $limit )
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getAllVisible( ?int $limit ) {
+
+        return $this
+            ->createStaticQuery( 'a.isRemove = false' , $limit )
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getAllPublic( ?int $limit ) {
+
+        return $this
+            ->createStaticQuery( 'a.isPublic = true' , $limit )
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getAllWarning( ?int $limit ) {
+
+        return $this
+            ->createStaticQuery( 'a.isWarningPublic = true' , $limit )
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getLastPublish( int $limit = 3 ) {
+
+        return $this
+            ->createStaticQuery( 'a.isWarningPublic = false' , $limit )
+            ->orderBy('a.createAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getAllVisibleSearch( string $search ) {
+
+        $articles = $this->createQueryBuilder('a')
+            ->orWhere('a.title LIKE :title')
+            ->orWhere('a.content LIKE :content')
+            ->setParameter('title', '%'.$search.'%')
+            ->setParameter('content', '%'.$search.'%')
+            ->andWhere('a.isRemove = false')
+            ->orderBy('a.createAt', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        $articlesID = [] ;
+
+        foreach( $articles as $article ) {
+
+            $articlesID[] = $article->getId() ;
+        }
+
+        return $articlesID ;
+    }
+
 }

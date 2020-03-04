@@ -1,0 +1,82 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+me profil
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset("/assets/css/profil-authorize.css")}}">
+{% endblock %}
+
+{% block body %}
+
+    {% set isIdentity = app.user.fname != NULL or app.user.name != NULL %}
+    {% set blockCount = app.user.blockers|length %}
+
+    <section class="profil profil-authorize">
+
+        <header>
+
+            <h1>
+                {{
+                    isIdentity ? app.user.name ?? app.user.fname : app.user.username
+                }}
+                {% if isIdentity %}
+                    as {{app.user.username}}
+                {% endif %}
+            </h1>
+
+            <blockquote>
+                member from {{app.user.createAt|date('d/m/Y')}}
+            </blockquote>
+
+        </header>
+
+        <aside>
+
+            <section class="activity-stats">
+                <p>
+                    i have write {{app.user.articles|length}} articles
+                </p>
+
+                <p>
+                    i have share {{app.user.commentaries|length}} commentaries
+                </p>
+
+                <p>
+                    i have block {{blockCount}} other user{{blockCount > 1 ? "s":""}}
+                </p>
+            </section>
+
+        </aside>
+
+        <footer>
+
+            <ul>
+                <li>
+                    <a
+                        href="{{path("app_user_settings")}}"
+                        class="btn blue"
+                    >
+                        settings
+                    </a>
+                </li>
+
+                {% if app.user.email != NULL and app.user.isValid == false %}
+                    <li>
+                        <button
+                            type="button"
+                            class="btn green mail-activate"
+                        >
+                            mail activate account
+                        </button>
+                    </li>
+                {% endif %}
+
+            </ul>
+
+        </footer>
+
+    </section>
+
+{% endblock %}

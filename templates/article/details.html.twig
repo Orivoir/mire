@@ -1,0 +1,104 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+{{article.title}} - {{article.user.username}}
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel='stylesheet' href="{{asset('assets/css/article-details.css')}}">
+{% endblock %}
+
+{% block body %}
+
+    <section class="article-wrap" id="article-{{article.id}}">
+
+        <header>
+            <h1>
+                {{article.title}}
+            </h1>
+
+            <div>
+                <blockquote>
+                    {{article.createAt|date('d/m/Y H:i/s')}}
+                </blockquote>
+
+                <h2>
+                    Author:
+                    <a href="{{path("app_user_profil" , {
+                        username: article.user.username
+                    } )}}">
+                        {{article.user.username}}
+                    </a>
+                </h2>
+            </div>
+
+        </header>
+
+        <p class="article-content">
+            {{article.content}}
+        </p>
+
+        <aside>
+
+            <h3> {{commentaries|length}} commentaries</h3>
+
+            {% if commentaries|length != 0  %}
+                <ul class="commentaries-list">
+                    {% for commentary in commentaries  %}
+
+                        {% if commentary.isRemove == false %}
+                            {% include "_commentaries/item.html.twig" %}
+                        {% endif %}
+
+
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {# valid account for post an comment #}
+            {% if app.user != NULL and app.user.isValid %}
+
+                {% if commentaries|length == 0 %}
+                    <p>
+                        you can be first to share this article
+                    </p>
+                {% endif %}
+
+                {% include "_form/commentaries.html.twig" %}
+
+            {% endif %}
+
+        </aside>
+
+        {% if app.user == NULL %}
+            <footer>
+                <ul>
+                    <li>
+                        <p>
+                            <a
+                                href="{{path("app_login")}}"
+                                class="btn blue"
+                            >
+                                sign in
+                            </a>
+                        </p>
+                    </li>
+
+                    <li>
+                        <p>
+                            <a
+                                href="{{path("app_login")}}"
+                                class="btn blue"
+                            >
+                                sign up
+                            </a>
+                        </p>
+                    </li>
+                </ul>
+            </footer>
+        {% endif %}
+
+
+    </section>
+
+{% endblock %}

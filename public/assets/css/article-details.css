@@ -1,0 +1,81 @@
+.article-wrap {
+
+    background :rgb( 220,220,220 );
+    width: 65%;
+    border-radius: 5px;
+    margin: 4vh auto;
+    min-width: 330px;
+    padding: 2.85vh 1.2vw;
+}
+
+.article-wrap header div {
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.article-wrap header h1 {
+
+    margin-left: 2vw;
+    position: relative;
+}
+
+
+.article-wrap header h1::before {
+
+    content: "" ;
+    position: absolute;
+    left: 0;
+    top: 12.5%;
+
+    width: 5px;
+    height: 65%;
+    transform: translate(-200% , 20%);
+    background: #2ecc71;
+}
+
+.article-wrap .article-content {
+
+    margin: 2.85vh 0;
+    letter-spacing: .2rem;
+    line-height: 2.55rem;
+    font-size: 20px;
+    word-spacing: .2rem;
+    word-break: break-all;
+}
+
+.article-wrap footer ul {
+
+    display: flex;
+    justify-content: center;
+}
+
+.article-wrap footer ul li {
+
+    margin: 0 1.2vw;
+}
+
+.article-wrap footer ul li a {
+
+    padding: 2vh 2vw;
+    font-size: 20px;
+}
+
+.article-wrap blockquote {
+
+    margin: 0;
+    padding: 0;
+    color: rgb( 42,42,42 ) ;
+}
+
+.article-wrap header a {
+
+    color: rgb( 42,42,42 ) ;
+}
+
+.article-wrap header h2 {
+
+    font-size: 25px;
+}

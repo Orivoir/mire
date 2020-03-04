@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+
+    <section class="profil-wrap profil-private-wrap">
+
+        <h1>
+            {{host.username}} have not an public profil
+        </h1>
+
+
+        <blockquote>
+            you can custom your profil&nbsp;
+            <a href="{{path("app_user_settings")}}">
+                here
+            </p>
+        </blockquote>
+
+    </section>
+
+{% endblock %}

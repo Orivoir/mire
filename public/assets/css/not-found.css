@@ -1,0 +1,96 @@
+.not-found ul li a {
+
+    color: rgb(42, 42, 42) ;
+    font-size: 29px;
+    background: rgba( 0,0,0,.07 ) ;
+    padding: 1vh .85vw;
+    letter-spacing: .13rem;
+    border-radius: 3px;
+    transition: .13s linear all;
+}
+
+.not-found p#sign-in {
+
+    width: 100%;
+    padding: 4.5PSvh 0;
+    color: #fff;
+    letter-spacing: .13rem;
+    word-spacing: .25rem;
+    font-size: 16px;
+    padding-left: 12vw;
+    margin-bottom: 0;
+}
+
+
+.not-found p#sign-in a {
+
+    position: relative;
+}
+
+.not-found p#sign-in a::before {
+
+    content: "";
+    position: absolute;
+    left: 0;
+    top: calc(100% + 4px);
+    width: 100%;
+    height: 3px;
+    background-color: #fff;
+}
+
+.not-found figure {
+
+    text-align: center;
+}
+
+.not-found figure img {
+
+    position: relative;
+
+    transform: translateY(-30%) ;
+    z-index: -1;
+}
+
+.not-found ul li a:hover {
+    background: rgba( 0,0,0,.11 ) ;
+}
+
+.not-found h1 {
+
+    margin: 4vh 0;
+}
+
+.not-found ul {
+
+    margin: 12vh 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.not-found h1 {
+
+    text-align: center;
+}
+
+@keyframes fadeInLetter {
+
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+}
+
+.not-found h1 span {
+
+    opacity: 0;
+    transform: translateX(-100%);
+    display: inline-block;
+    animation: fadeInLetter .5s ease-in-out 1s forwards;
+}

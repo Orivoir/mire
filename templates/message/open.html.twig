@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MessageController{% endblock %}
+
+{% block body %}
+
+    <section class="message-open">
+
+        <header>
+            <h1>
+                object: {{message.title != NULL ? message.title : "empty"}}
+            </h1>
+
+            <blockquote>
+
+                send by
+                <a href="{{path("app_user_profil" , {
+                    "username": message.author.username
+                } )}}">
+                    {{message.author.username}}
+                </a>
+
+                at {{message.sendAt|date("d/m/Y H:i")}}
+
+            </blockquote>
+
+        </header>
+
+        <aside>
+            <p>
+                {{message.content}}
+            </p>
+        </aside>
+
+        <footer>
+
+            <a href="{{path("app_message_response" , {
+                "target": message.author.username ,
+            } )}}" class="btn">
+                response
+            </a>
+
+            <button id="remove-message" type="button" data-id="{{message.id}}" >
+                remove
+            </button>
+
+            <button
+                id="block-user"
+                data-target="/u/block/{{message.author.id}}"
+                data-method="BLOCK"
+            >
+                block {{message.author.username}}
+            </button>
+
+        </footer>
+
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded' , () => {
+
+            // block user fetch scipt
+
+            const blockButton = document.querySelector('#block-user') ;
+
+            if( blockButton instanceof Node ) {
+
+                blockButton.addEventListener('click' , function() {
+
+                    const target = this.getAttribute('data-target') ;
+
+                    fetch( target , {
+
+                        method: this.getAttribute('data-method') ,
+
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    } ).then( res => res.json() )
+                    .then( data => {
+
+                        if( data.success ) {
+
+                            console.log('%c user block with success' , `background: green;color:#fff` );
+
+                        } else {
+
+                            console.error('block user is reject') ;
+                        }
+
+                        this.classList.add('hide') ;
+                    } )
+
+                } ) ;
+            }
+
+
+            // remove message fetch script
+            const section = document.querySelector('.message-open') ;
+
+            async function remove( id ) {
+
+                const response = await fetch(
+                    `/message/${TOKEN_USER}/${id}` ,
+                    {
+                        method: 'DELETE' ,
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    }
+                ) ;
+
+                return await response.json() ;
+            }
+
+            document
+                .querySelector("button#remove-message")
+                .addEventListener('click' , function() {
+
+                    const id = this.getAttribute('data-id') ;
+
+
+                    remove( id )
+                    .then( data => {
+
+                        if( data.success ) {
+
+                            this.classList.add('hide') ;
+                            section.classList.add('remove') ;
+
+                        } else {
+
+                        }
+                    } )
+                    .catch( err => {
+
+                        console.error( err );
+
+                        throw "fetch remove message error" ;
+                    } )
+
+                } )
+            ;
+
+        } ) ;
+    </script>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+
+    <section class="my-subjects">
+
+        <header>
+            <h1>
+                you have share {{articles|length}} article{{articles|length > 1 ? "s":""}} .
+            </h1>
+        </header>
+
+        <ul class="article-list">
+            {% for article in articles  %}
+
+                {% include "_article/item.html.twig" with {
+                    isAuthor: app.user.id == article.user.id
+                } %}
+
+            {% endfor %}
+        </ul>
+
+    </section>
+
+{% endblock %}

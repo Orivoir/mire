@@ -1,0 +1,49 @@
+.profil-authorize {
+
+    width: 65%;
+    min-width: 320px;
+    margin: 4.85vh auto;
+    padding: 1.85vh 2vw;
+    border-radius: 3px;
+}
+
+.profil-authorize footer ul li {
+
+    margin: 0 3vw;
+}
+
+.profil-authorize footer ul li:first-child {
+    margin-left: 0;
+}
+.profil-authorize footer ul li:last-child {
+
+    margin-right: 0;
+}
+
+.profil-authorize footer {
+
+    margin-top: 6vh;
+}
+
+.profil-authorize footer ul {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profil-authorize footer ul li button ,
+.profil-authorize footer ul li a
+{
+
+    font-size: 25px;
+    letter-spacing: .25rem;
+}
+
+
+.profil-authorize footer ul li:last-child button ,
+.profil-authorize footer ul li:last-child a {
+
+    font-size: 20px;
+    letter-spacing: .12rem;
+}

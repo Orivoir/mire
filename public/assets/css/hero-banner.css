@@ -1,0 +1,79 @@
+.hero-banner {
+
+    background-image: url('../images/pawn.svg') ;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 6% 70%;
+    background-size: 155px 155px;
+    padding: 5vh 0;
+}
+
+.hero-banner aside {
+
+    padding: 3vh 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.hero-banner aside a {
+
+    margin: 1vh .85vw;
+    padding: 2vh 3vw;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 3px;
+}
+
+.hero-banner header {
+
+    text-align: center;
+}
+
+.hero-banner h2 {
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    font-size: 42px;
+    letter-spacing: .2rem;
+    word-spacing: .42rem;
+}
+
+.hero-banner h3 {
+
+    font-size: 30px;
+    letter-spacing: .12rem;
+    word-spacing: .28rem;
+    font-style: italic;
+    color: rgb( 130,130,130 ) ;
+}
+
+@media screen and (max-width: 950px) , (max-height: 500px) {
+
+    .hero-banner header h2 {
+        font-size: 30px;
+        letter-spacing: .1rem;
+        word-spacing: .1rem ;
+    }
+
+    .hero-banner header h3 {
+        font-size: 22px;
+        letter-spacing: .05rem;
+        word-spacing: .05rem;
+    }
+
+    .hero-banner aside {
+
+        flex-direction: column;
+    }
+
+    .hero-banner aside a {
+
+        width: 33%;
+        min-width: 160px;
+        margin: 9px auto;
+        text-align: center;
+    }
+}

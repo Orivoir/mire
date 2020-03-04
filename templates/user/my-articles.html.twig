@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <section class="my-articles">
+
+        <header>
+            <h1>you have write {{articles|length}} article{{articles|length > 1 ? "s":""}} .
+        </header>
+
+        <ul class="article-list">
+        {% for article in articles %}
+
+            {% if article.isRemove == false %}
+                {% include "_article/item.html.twig" with { isAuthor: true } %}
+            {% endif %}
+
+        {% endfor %}
+        </u>
+
+    </section>
+
+{% endblock %}

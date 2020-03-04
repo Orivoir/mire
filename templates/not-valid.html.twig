@@ -1,0 +1,45 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+
+    <section>
+
+        <h1>Activate you account for use this feature</h1>
+
+        {% if app.user != NULL %}
+
+            {% if app.user.email != NULL %}
+
+                <a href="">
+                    send email activate account to&nbsp;
+                    <strong>{{app.user.email}}</strong>
+                </a>
+
+            {% else %}
+
+                <p>
+                    <a href="{{path("app_user_settings")}}">
+                       you can complet your account here
+                    </a>
+                </p>
+
+            {% endif %}
+
+        {% else %}
+
+            <p>
+                <a href="{{path("app_login")}}">
+                    sign in for activate your account
+                </a>
+            </p>
+
+
+        {% endif %}
+
+    </section>
+
+{% endblock %}

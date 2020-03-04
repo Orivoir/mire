@@ -1,0 +1,57 @@
+#wrap-confirm-action {
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    top: 0;
+    background: rgb( 42,42,42 ) ;
+    z-index: 99999999;
+    width: 100%;
+    overflow: hidden;
+}
+
+#wrap-confirm-action section {
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50% , -50%);
+}
+
+#wrap-confirm-action header p {
+
+    color: #fff;
+
+    font-size: 22px;
+    letter-spacing: .2rem;
+    word-spacing: .2rem;
+}
+
+#wrap-confirm-action aside ul {
+
+    display: flex;
+}
+
+#wrap-confirm-action aside ul li button {
+
+    padding: 2.85vh 1.5vw;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: .23rem;
+}
+
+#wrap-confirm-action aside ul li {
+
+    margin: 0 2vw;
+}
+
+#wrap-confirm-action aside ul li:first-child {
+
+    margin-left: 0;
+}
+
+#wrap-confirm-action aside ul li:last-child {
+
+    margin-right: 0;
+}

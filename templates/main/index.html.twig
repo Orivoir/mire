@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}home{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset("assets/css/hero-banner.css")}}">
+
+{% endblock %}
+
+{% block body %}
+
+    <section class="hero-banner">
+        <header>
+            <h2>
+                <strong>Mire</strong> all chess game here and now.
+            </h2>
+            <h3>
+                share and follow with players and enthusiasts of the same game.
+            </h3>
+        </header>
+
+        <aside>
+
+            <a
+                href="{{path("app_register")}}"
+                class="btn blue"
+            >
+                join now
+            </a>
+
+            <a
+                href="{{path("app_main_contact")}}"
+                class="btn blue-outline"
+            >
+                contact
+            </a>
+
+            <a
+                href="{{path("app_main_about")}}"
+                class="btn blue"
+            >
+                learn more
+            </a>
+
+        </aside>
+
+    </section>
+
+    <section class="articles-wrap">
+
+        <ul class="article-list">
+
+            {% for article in articles  %}
+                {% include "_article/item.html.twig" %}
+            {% endfor %}
+
+        </ul>
+
+    </section>
+
+{% endblock %}

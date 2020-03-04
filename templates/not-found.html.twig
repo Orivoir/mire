@@ -1,0 +1,80 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    404
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset("/assets/css/not-found.css")}}">
+{% endblock %}
+
+{% block body %}
+    <section class="not-found">
+
+        <h1>
+            A<span>re</span> y<span>ou</span> l<span>ost ?</span>
+        </h1>
+
+        {#
+            options back
+            after an 404
+        #}
+        <ul>
+            <li>
+                <a href="{{path("app_main_site_map")}}">
+                    get site map
+                </a>
+            </li>
+
+            {% if app.user != NULL  %}
+
+                <li>
+                    <a href="{{path("app_user_settings")}}">
+                        user settings
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{path("app_user_profil", {
+                        "username": app.user.username
+                    })}}">
+                        user profil
+                    </a>
+                </li>
+
+            {% endif %}
+
+            <li>
+                <a href="{{path("app_main_contact")}}">
+                    contact admin
+                </a>
+            </li>
+
+        </ul>
+
+        <figure>
+
+            <img
+                src="{{asset("/assets/images/404.png")}}"
+                alt="not found"
+            />
+
+        </figure>
+
+        <p id="sign-in" class="bg-color-primary">
+            <strong>Mire<sup>&copy;</sup></strong> is develop by
+            <a href="">
+                Samuel GABORIEAU
+            </a>
+            with
+            <a href="">
+                Symfony 5
+            </a>
+            you can contribute on
+            <a href="">
+                github
+            </a>
+        </p>
+
+    </section>
+{% endblock %}

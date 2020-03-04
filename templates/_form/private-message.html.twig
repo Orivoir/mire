@@ -1,0 +1,30 @@
+<section class="form-private-message hide-o">
+
+    {{form_start(formMessage, {
+        "attr": {
+            "class": "form-container"
+        }
+    })}}
+
+        <div class="form-group">
+            {{form_row( formMessage.title , {
+                "label": "title"
+            } )}}
+        </div>
+
+        <div class="form-group">
+            {{form_row( formMessage.content , {
+                "label": "content"
+            } )}}
+        </div>
+
+        <button
+            type="submit"
+            class="btn blue"
+        >
+            send
+        </button>
+
+    {{form_end(formMessage)}}
+
+</section>

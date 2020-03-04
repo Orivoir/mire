@@ -1,0 +1,47 @@
+<li class="message-item">
+
+    <section>
+
+        <h1>
+            <a href="{{path("app_user_profil" , {
+                "username": message.author.username
+            } )}}">
+                {{message.author.username}}
+            </a>
+        </h1>
+
+        <h2>
+            object: {{message.title|length > 0 ? message.title : "empty object" }}
+        </h2>
+
+        <aside>
+
+            <a href="{{path("app_message_open" , {
+                "id": message.id
+            } )}}" class="btn">
+                open
+            </a>
+
+            {% if message.isRead == false %}
+
+                <button
+                    type="button"
+                    data-id="{{message.id}}"
+                    class="mark-as-read"
+                >
+                    mark as read
+                </button>
+
+            {% else %}
+
+                <p>
+                    at {{message.sendAt|date('d/m/Y')}}
+                </p>
+
+            {% endif %}
+
+        </aside>
+
+    </section>
+
+</li>

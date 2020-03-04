@@ -1,0 +1,159 @@
+<nav>
+
+    <h1>
+        <a href="{{path("app_main_index")}}">
+            <img
+                src="{{asset("assets/images/mire.svg")}}"
+                alt="logo mire"
+                width="125"
+                height="125"
+            >
+        </a>
+    </h1>
+
+    <div class="small-screen">
+
+        <button
+            type="button"
+            class="hamburger-menu"
+            data-open="#header-menu-list"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </div>
+
+    <ul id="header-menu-list">
+
+        {% if app.user == NULL or app.user is not defined %}
+            <li>
+                <a href="{{path("app_login")}}">
+                    sign in
+                </a>
+            </li>
+
+            <li>
+                <a href="{{path("app_register")}}">
+                    sign up
+                </a>
+            </li>
+
+            <li>
+                <a href="{{path("app_main_about")}}">
+                    about
+                </a>
+            </li>
+        {% else %}
+            <li>
+                <a href="{{path("app_user_profil" , {
+                    "username": app.user.username
+                } )}}">
+                    <img
+                        src="{{app.user.avatarPath}}"
+                        alt="avatar"
+                        class="avatar avatar-menu"
+                        width="120"
+                        height="120"
+                    />
+                </a>
+            </li>
+
+            <li>
+                <a href="{{path("app_article_new")}}">
+                    create article
+                </a>
+            </li>
+
+            <li>
+                <a href="{{path("app_user_aticles")}}">
+                    articles
+                </a>
+            </li>
+
+            <li>
+                <a href="{{path("app_user_subjects")}}">
+                    subjects
+                </a>
+            </li>
+
+            {% if app.user.isValid %}
+                <li class="message-item">
+                    <a href="{{path("app_user_message_box")}}">
+                        messages
+                        <span class="new-messages-count"></span>
+                    </a>
+                </li>
+            {% endif %}
+
+            <li>
+                <a href="{{path("app_logout")}}">
+                    logout
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+
+    <div class="search-icon search-icon-header">
+        <i class="fas fa-search"></i>
+    </div>
+
+</nav>
+
+<div id="content-search">
+
+    <form
+        method="GET"
+    >
+
+        <div>
+            <button
+                type="button"
+                class="btn red close"
+                data-close="#content-search"
+                data-class-remove="open"
+                data-class-add=""
+            >
+                {# close search content #}
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div>
+            <label for="search" class="search-icon">
+                {# <i class="fas fa-search"></i> #}
+            </label>
+
+            <input
+                name="search"
+                id="search"
+                placeholder="search article or user ..."
+                autofocus="on"
+            >
+        </div>
+
+        <div>
+            <button
+                type="submit"
+                class="btn blue"
+            >
+                <i class="fas fa-search search-icon"></i>
+
+                <i class="hide fas fa-spinner load-icon"></i>
+            </button>
+        </div>
+
+    </form>
+
+    <div id="content-result">
+
+        <ul id="result-article"></ul>
+
+        <ul id="result-user"></ul>
+
+    </div>
+
+</div>

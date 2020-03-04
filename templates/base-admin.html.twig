@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+
+        <link href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" rel="stylesheet">
+
+        <link href="{{asset("/assets/css/base.css")}}" rel="stylesheet">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+
+        <main>
+            {% include "_menu/menu-admin.html.twig" %}
+
+            {% block body %}{% endblock %}
+        </main>
+
+        {% if app.user != NULL %}
+            <script>
+                const TOKEN_USER = '{{app.user.token}}' ;
+            </script>
+        {% endif %}
+
+
+        {% block javascripts %}{% endblock %}
+
+    </body>
+</html>
