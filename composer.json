@@ -24,10 +24,10 @@
         "symfony/validator": "5.0.*",
         "symfony/var-dumper": "5.0.*",
         "symfony/yaml": "5.0.*",
-		"symfony/twig-pack": "1.0.*"
+        "symfony/twig-pack": "1.0.*",
+        "symfony/profiler-pack": "^1.0"
     },
     "require-dev": {
-		"symfony/profiler-pack": "^1.0",
 		"symfony/maker-bundle": "^1.14",
         "fzaninotto/faker": "^1.9",
 		"doctrine/doctrine-fixtures-bundle": "^3.3"
