@@ -1,4 +1,9 @@
 doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_URL)%'
+        charset: 'utf8mb4'
+        driver: 'pdo_pgsql'
+
     orm:
         auto_generate_proxy_classes: false
         metadata_cache_driver:
