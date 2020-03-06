@@ -41,6 +41,7 @@ class ArticleController extends AbstractController
 
             if(
                 !$article->getIsPublic() &&
+                $this->getUser() &&
                 $this->getUser()->getId() !== $article->getUser()->getId()
             ) {
                 // 403 forbidden mute with 404

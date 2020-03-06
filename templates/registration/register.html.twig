@@ -1,7 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
+    <style>
+        .load-icon {
 
+            display: inline-block;
+            transform-origin: center center;
+            animation: spin .5s ease-in-out infinite ;
+        }
+    </style>
 {% endblock %}
 
 {% block title %}Register{% endblock %}
@@ -15,21 +22,36 @@
         }
     } ) }}
 
+        {% set usernameError = form_errors(registrationForm.username) %}
+        {% if usernameError != NULL %}
+            <div class="form-error">
+                {{usernameError|raw}}
+            </div>
+        {% endif %}
+
+        <div>
+            <i class="hide fas fa-spinner load-icon load-username-icon"></i>
+            <i class="hide fas fa-check success-icon"></i>
+            <i class="hide fas fa-times error-icon"></i>
+        </div>
         <div class="form-group">
-            {{ form_row(registrationForm.username , {
-                'label': "username"
-            } ) }}
+            {{form_label( registrationForm.username , "username" )}}
+            {{ form_widget(registrationForm.username ) }}
         </div>
 
+        {% set errorPlainPassword = form_errors(registrationForm.plainPassword)  %}
+        {% if  errorPlainPassword != NULL %}
+            <div class="form-error">
+                {{errorPlainPassword|raw}}
+            </div>
+        {% endif %}
+
         <div class="form-group">
-            {{ form_row(registrationForm.plainPassword, {
-                "label": "password"
-            } ) }}
+            {{form_label( registrationForm.plainPassword , "password" )}}
+            {{ form_widget(registrationForm.plainPassword ) }}
         </div>
 
         <input type="hidden" id="g-score" name="g-score" value="">
-
-        {# {{ form_widget( registrationForm ) }} #}
 
         <button
             type="submit"
@@ -103,7 +125,6 @@
         const onFieldRequireError = function( input ) {
 
             input.classList.add('error') ;
-
         } ;
 
         const onFieldRequireSuccess = function( input ) {
@@ -111,13 +132,89 @@
             input.classList.remove('error') ;
         } ;
 
+        const iconLoaderUsername = document.querySelector('.load-username-icon') ;
+        const iconSuccessUsername = document.querySelector('.success-icon') ;
+        const iconErrorUsername = document.querySelector('.error-icon') ;
+
         const callbacks = {
 
             onRequireError: onFieldRequireError ,
-            onRequireSuccess: onFieldRequireSuccess
+            onRequireSuccess: onFieldRequireSuccess ,
+            onFocus: function( input ) {
+
+                if( /username/i.test(input.id) ) {
+
+                    iconLoaderUsername.classList.remove('hide') ;
+                    iconErrorUsername.classList.add('hide') ;
+                    iconSuccessUsername.classList.add('hide') ;
+                }
+            } ,
+            onBlur: function( input ) {
+
+                if( /username/i.test(input.id) ) {
+
+                    iconLoaderUsername.classList.add('hide') ;
+                }
+            } ,
         } ;
 
-        const handlerUsernameInput = new HandlerInput( usernameInput , callbacks ) ;
+        function checkUsername( username )  {
+
+            fetch( `/is-valid/${username}` , {
+                method: 'GET' ,
+                headers: {
+                    'Accepts': 'application/json'
+                }
+            } ).then( response => response.json() )
+            .then( data => {
+
+                iconLoaderUsername.classList.add('hide') ;
+                iconErrorUsername.classList.add('hide') ;
+                iconSuccessUsername.classList.add('hide') ;
+
+                if( data.success ) {
+
+                    iconSuccessUsername.classList.remove('hide') ;
+
+                } else {
+                    iconErrorUsername.classList.remove('hide') ;
+                }
+
+            } ) ;
+        }
+
+        let checkIsEngaged = false ;
+        let checkUsernameID = null ;
+        const STEPS_CHECK_USERNAME = 275 ; // ms
+
+        const handlerUsernameInput = new HandlerInput( usernameInput , {...callbacks , 
+            onChangeText: function(text, lastCharEnter , input ) {
+
+                iconLoaderUsername.classList.remove('hide') ;
+                iconErrorUsername.classList.add('hide') ;
+                iconSuccessUsername.classList.add('hide') ;
+
+                if( checkIsEngaged ) {
+
+                    clearTimeout( checkUsernameID ) ;
+
+                    checkIsEngaged = false ;
+
+                } else {
+
+                    checkUsernameID = setTimeout(() => {
+
+                        if( usernameInput.value ) {
+                            checkUsername( text ) ;
+                        }
+                    }, STEPS_CHECK_USERNAME) ;
+
+                    checkIsEngaged = true ;
+                }
+
+
+            }
+        } ) ;
         const handlerPasswordInput = new HandlerInput( passwordInput , callbacks ) ;
 
         handlerUsernameInput.require = true ;

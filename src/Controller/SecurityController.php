@@ -109,4 +109,29 @@ class SecurityController extends AbstractController
         }
 
     }
+
+    /**
+     * @Route("/is-valid/{username}" , methods={"GET"} , name="app_is_valid_username" )
+     */
+    public function isValidUsername(string $username, UserRepository $userRep) {
+
+        $user = $userRep->findOneBy( ['username' => $username] ) ;
+
+        if( $user ) {
+
+            // username already exists
+
+            return $this->json( [
+                "success" => false
+            ] ) ;
+
+        } else {
+
+            // username free
+
+            return $this->json([
+                "success" => true
+            ]) ;
+        }
+    }
 }

@@ -163,7 +163,7 @@ class HandlerInput {
 
     static get eventsName() {
 
-        return ['input','keydown','blur'] ;
+        return ['input','keydown','blur','focus'] ;
     }
 
     constructor( input , callbacks ) {
@@ -227,12 +227,23 @@ class HandlerInput {
         this.input.addEventListener( 'input' , e => this.onInput( e ) ) ;
 
         this.input.addEventListener('blur' , () => this.onBlur() ) ;
+
+        this.input.addEventListener('focus' , () => this.onFocus() ) ;
+    }
+
+    onFocus() {
+
+        const fxOnEvent = this.callbacks.onEvent || ( () => {} ) ;
+        const fxOnFocus = this.callbacks.onFocus || ( () => {} ) ;
+
+        fxOnEvent( this.input ) ;
+        fxOnFocus( this.input ) ;
     }
 
     onBlur() {
 
         const fxOnEvent = this.callbacks.onEvent || ( () => {} ) ;
-        const fxOnBlur = this.callbacks.fxOnBlur || ( () => {} ) ;
+        const fxOnBlur = this.callbacks.onBlur || ( () => {} ) ;
         const fxRequireError = this.callbacks.onRequireError || ( () => {} ) ;
         const fxRequireSuccess = this.callbacks.onRequireSuccess || ( () => {} ) ;
 
@@ -257,7 +268,7 @@ class HandlerInput {
 
         const fxOnChangeText = this.callbacks.onChangeText ;
 
-        fxOnChangeText ? fxOnChangeText( e.data ) : null ;
+        fxOnChangeText ? fxOnChangeText( this.input.value , e.data , this.input ) : null ;
 
         fxOnEvent() ;
     }

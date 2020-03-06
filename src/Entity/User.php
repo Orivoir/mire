@@ -6,12 +6,19 @@ use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\NotEqualTo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
+ * @UniqueEntity(
+ *  fields={"username"},
+ *  message="There is already an account with this username"
+ * )
  * @Table(name="client")
  */
 class User implements UserInterface
@@ -25,6 +32,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @NotBlank( message="username cant be empty" )
+     * @Length(
+     *      min=2, max=42 ,
+     *      minMessage="username min size is 2 characters" ,
+     *      maxMessage="username max size is 42 characters",
+     *      normalizer="trim"
+     * )
      */
     private $username;
 
@@ -39,20 +53,43 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @NotBlank
+     * @Length(
+     *      min=2, max=255 ,
+     *      minMessage="password min size is 2 characters" ,
+     *      maxMessage="password max size is 42 characters",
+     * )
+     */
     private $plainPassword;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Email(
+     *      message="email format is invalid"
+     * )
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @NotEqualTo( propertyPath="name" , message="first name cant be equal to last name" )
+     * @Length(
+     *      min=2, max=30 ,
+     *      minMessage="first name min size is 2 characters" ,
+     *      maxMessage="first name max size is 42 characters",
+     * )
      */
     private $fname;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @NotEqualTo( propertyPath="fname" , message="last name cant be equal to first name" )
+     * @Length(
+     *      min=2, max=30 ,
+     *      minMessage="last name min size is 2 characters" ,
+     *      maxMessage="last name max size is 42 characters",
+     * )
      */
     private $name;
 
@@ -125,7 +162,6 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $avatarName=null;
-
 
     public function __construct()
     {
@@ -570,4 +606,5 @@ class User implements UserInterface
 
         return "/assets" . (!!$this->avatarName ? '/uploads/avatar/' . $this->avatarName : '/images/pawn.svg' ) ;
     }
+
 }

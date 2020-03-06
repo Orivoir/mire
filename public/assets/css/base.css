@@ -237,7 +237,20 @@ button , a {
     transition: opacity .32s ease-in-out;
 }
 
+.success-icon , .error-icon  {
 
+    font-size: 22px;
+}
+
+.error-icon {
+
+    color: #e74c3c;
+}
+
+.success-icon {
+
+    color: #2ecc71;
+}
 
 h1 {
 
@@ -346,7 +359,7 @@ blockquote {
 
 .hide , .hidden {
 
-    display: none;
+    display: none!important;
 }
 
 button , .btn {
@@ -486,6 +499,36 @@ a {
     top: 0;
 }
 
+.form-error {
+
+    position: relative;
+    display: inline-block;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: .15rem;
+}
+
+.form-error::before {
+
+    content: "error" ;
+
+    font-style: normal;
+    background: #e74c3c;
+    color: #fff;
+    padding: 1vh .5vw;
+    border-radius: 3px;
+    margin-right: .5vw;
+    font-weight: 600;
+    top: 50%;
+    position: absolute;
+    left: 0;
+    transform: translate(calc(-100% - 1vw) , -50%) ;
+    font-size: 17px;
+    letter-spacing: .13rem;
+}
+
+/* error animation */
 @keyframes wizz {
 
     from {
@@ -504,6 +547,32 @@ a {
     }
     to {
         transform: translate( 0 , 0 ) rotate(0 , 0) ;
+    }
+}
+
+/* progress bar */
+@keyframes load {
+
+    from {
+
+        transform: scaleX( 0 ) ;
+    }
+
+    42% {
+
+        transform: scaleX( .31 ) ;
+    }
+
+    72% {
+
+
+        transform: scaleX( .85 ) ;
+    }
+
+    to {
+
+        transform: scaleX( 1 ) ;
+        background: #2ecc71;
     }
 }
 

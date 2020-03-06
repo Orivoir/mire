@@ -37,31 +37,6 @@ nav button {
     color: #fff;
 }
 
-@keyframes load {
-
-    from {
-
-        transform: scaleX( 0 ) ;
-    }
-
-    42% {
-
-        transform: scaleX( .31 ) ;
-    }
-
-    72% {
-
-
-        transform: scaleX( .85 ) ;
-    }
-
-    to {
-
-        transform: scaleX( 1 ) ;
-        background: #2ecc71;
-    }
-}
-
 nav::before {
 
     content: "";
