@@ -40,8 +40,6 @@
                     resultArticle.innerHTML = "" ;
                     resultUser.innerHTML = "" ;
 
-                    console.log( formSearch.offsetHeight );
-
                     contentResult.style.marginTop =  ( formSearch.offsetHeight ) + "px" ;
                     inputSearch.style.height = ( formSearch.offsetHeight ) + "px" ;
                 }

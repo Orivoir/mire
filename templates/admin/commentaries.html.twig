@@ -1,0 +1,81 @@
+{% extends "base-admin.html.twig" %}
+
+{% block title %}users{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset("/assets/css/admin/reader-db.css")}}">
+{% endblock %}
+
+{% block body %}
+
+    <section>
+
+        <header>
+            <h1>{{range.getTotalItemCount}} commentar{{range.getTotalItemCount > 1 ? "ies":"y"}} registred</h1>
+        </header>
+
+        <div class="wrap-pgination">
+            {{ knp_pagination_render(range) }}
+        </div>
+
+        <aside>
+
+            <ul class="flex-list">
+
+                {% for commentary in range %}
+                    <li>
+                        <section>
+                            <header>
+                                <h1>
+                                    author: {{commentary.user.username}} ({{commentary.id}})
+                                </h1>
+
+                                <h3>commentary is remove : {{commentary.isRemove ? "yes" : "no"}} </h3>
+
+                                {% if commentary.isRemove == true %}
+                                    <h3>commentary remove at {{commentary.removeAt|date('d/m/Y H:i:s')}} </h3>
+                                {% endif %}
+                            </header>
+
+                            <aside>
+
+                                <p>
+                                    content: {{commentary.content}}
+                                </p>
+
+                                <p>
+                                    attach to article: {{commentary.article.title}} ({{commentary.article.id}})
+                                </p>
+
+                            </aside>
+
+                            <footer>
+
+                                <a
+                                    href=""
+                                    class="btn blue"
+                                >
+                                    more with {{commentary.content|slice(0,8)}}...
+                                </a>
+
+                            </footer>
+
+                        </section>
+                    </li>
+                {% endfor %}
+
+            </ul>
+
+        </aside>
+
+        <footer>
+
+            <div class="wrap-pgination">
+                {{ knp_pagination_render(range) }}
+            </div>
+
+        </footer>
+
+    </section>
+
+{% endblock %}

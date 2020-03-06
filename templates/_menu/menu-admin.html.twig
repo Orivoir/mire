@@ -1,0 +1,83 @@
+<header>
+
+    <div id="title-header">
+
+        <h1>
+            <a href="{{path("app_main_index")}}">
+                <img
+                    src="{{asset("assets/images/mire.svg")}}"
+                    alt="logo mire"
+                    width="125"
+                    height="125"
+                >
+            </a>
+        </h1>
+
+        <h2>Reader database</h2>
+
+        <blockquote>
+            full access
+        </blockquote>
+
+    </div>
+
+    <div class="small-screen">
+
+        <button
+            type="button"
+            class="hamburger-menu"
+            data-open="#header-menu-list"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </div>
+
+    <nav>
+
+        <ul id="header-menu-list">
+
+            <li>
+                <a href="{{path("app_admin_articles" , {
+                    page: 1
+                })}}">
+                    articles
+                </a>
+            </li>
+
+            <li>
+                <a href="{{path("app_admin_users" , {
+                    page: 1
+                } )}}">
+                    users
+                </a>
+            </li>
+
+            <li>
+                <a href="{{path("app_admin_commentaries" , {
+                    page: 1
+                } )}}">
+                    commentaries
+                </a>
+            </li>
+
+            <li>
+                <a href="">
+                    user flux
+                </a>
+            </li>
+
+            <li>
+                <a href="">
+                    feedback
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+</header>

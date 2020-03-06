@@ -7,11 +7,19 @@
         <link href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" rel="stylesheet">
 
         <link href="{{asset("/assets/css/base.css")}}" rel="stylesheet">
+        <link href="{{asset("/assets/css/menu.css")}}" rel="stylesheet">
         {% block stylesheets %}{% endblock %}
+        <style>
+            .small-screen button {
+
+                background: rgb(42,42,42);
+            }
+        </style>
     </head>
+
     <body>
 
-        <main>
+        <main id="main-content">
             {% include "_menu/menu-admin.html.twig" %}
 
             {% block body %}{% endblock %}
@@ -23,7 +31,7 @@
             </script>
         {% endif %}
 
-
+        <script src="{{asset("/assets/js/base.js")}}"></script>
         {% block javascripts %}{% endblock %}
 
     </body>

@@ -324,6 +324,37 @@ class HandlerInput {
 
 document.addEventListener('DOMContentLoaded' , () => {
 
+    document.querySelectorAll('.hamburger-menu').forEach( menuEl => {
+
+        menuEl.addEventListener('click' , function() {
+
+            const status = !!this.classList.contains( 'toggle' ) ;
+
+            this.classList[ status ? "remove": "add" ]( 'toggle' ) ;
+
+            const targetSel = this.getAttribute( 'data-open' ) ;
+
+            const target2open = document.querySelector( targetSel ) ;
+
+            if( target2open instanceof Node ) {
+
+                target2open.classList[ status ? "remove": "add" ]( 'open' ) ;
+            }
+        } ) ;
+
+    } ) ;
+
+    window.addEventListener('resize' , () => {
+
+        if( window.matchMedia("(min-width: 1100px)").matches ) {
+
+            document.querySelector('#header-menu-list').classList.remove('open') ;
+
+            document.querySelector('button[data-open="#header-menu-list"]').classList.remove('toggle') ;
+        }
+
+    } ) ;
+
     // resolve propagation click while define data attributes
     ( () => {
 
@@ -449,6 +480,6 @@ document.addEventListener('DOMContentLoaded' , () => {
     } )() ;
 
     // resolve send mail activate buttons with ".mail-activate"
-    
 
 } ) ;
+
