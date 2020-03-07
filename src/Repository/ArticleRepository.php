@@ -88,10 +88,26 @@ class ArticleRepository extends ServiceEntityRepository
         ;
     }
 
+    public function getAllVisibleQuery( ?int $limit ) {
+
+        return $this
+            ->createStaticQuery( [
+                'a.isRemove = false' ,
+                'a.isPublic = true'
+            ] , $limit )
+            ->orderBy('a.createAt', 'DESC')
+            ->getQuery()
+        ;
+    }
+
     public function getAllVisible( ?int $limit ) {
 
         return $this
-            ->createStaticQuery( 'a.isRemove = false' , $limit )
+            ->createStaticQuery( [
+                'a.isRemove = false' ,
+                'a.isPublic = true'
+            ] , $limit )
+            ->orderBy('a.createAt', 'DESC')
             ->getQuery()
             ->getResult()
         ;
