@@ -53,12 +53,23 @@ class ArticleRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')->getQuery() ;
     }
 
-    public function createStaticQuery( string $constraint , ?int $limit ) {
+    public function createStaticQuery( $constraint , ?int $limit ) {
 
         $query = $this
             ->createQueryBuilder('a')
-            ->andWhere( $constraint )
         ;
+
+        if( \is_string( $constraint ) ) {
+
+            $query->andWhere( $constraint ) ;
+
+        } else if( \is_array( $constraint ) ) {
+
+            foreach( $constraint as $currentConstraint ) {
+
+                $query->andWhere( $currentConstraint ) ;
+            }
+        }
 
         if( is_int( $limit ) && $limit > 0 ) {
 
@@ -107,7 +118,10 @@ class ArticleRepository extends ServiceEntityRepository
     public function getLastPublish( int $limit = 3 ) {
 
         return $this
-            ->createStaticQuery( 'a.isWarningPublic = false' , $limit )
+            ->createStaticQuery( [
+                'a.isWarningPublic = false',
+                'a.isPublic = true'
+            ] , $limit )
             ->orderBy('a.createAt', 'DESC')
             ->getQuery()
             ->getResult()
