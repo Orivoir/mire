@@ -45,7 +45,7 @@ class Message
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Length(
      *      max="255" ,
-     *      minMessage="title message size max is 255 characters" ,
+     *      maxMessage="title message size max is 255 characters" ,
      *      normalizer="trim" )
      */
     private $title;
