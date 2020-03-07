@@ -34,17 +34,17 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
                 ->setContent( $faker->sentence( 200 , true ) )
             ;
 
-            if( \mt_rand( 0 , 10 ) >= 3 ) {
+            if( \mt_rand( 0 , 10 ) < 3 ) {
 
                 $article->setIsPublic( false ) ;
             }
 
-            if( \mt_rand( 0 , 10 ) >= 2 ) {
+            if( \mt_rand( 0 , 10 ) < 3 ) {
 
                 $article->setIsRemove( false ) ;
             }
 
-            if( \mt_rand( 0 , 10 ) >= 3 ) {
+            if( \mt_rand( 0 , 10 ) < 3 ) {
 
                 $article->setIsWarningPublic( true ) ;
             }

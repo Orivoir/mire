@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
@@ -29,11 +31,22 @@ class Message
 
     /**
      * @ORM\Column(type="text")
+     * @NotBlank( message="content message cant be empty" )
+     * @Length(
+     *      min="2" ,
+     *      max="1024" ,
+     *      minMessage="message size min is 2 characters" ,
+     *      maxMessage="message size max is 1024 characters" ,
+     *      normalizer="trim" )
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Length(
+     *      max="255" ,
+     *      minMessage="title message size max is 255 characters" ,
+     *      normalizer="trim" )
      */
     private $title;
 

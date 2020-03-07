@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentaryRepository")
@@ -24,6 +26,13 @@ class Commentary
 
     /**
      * @ORM\Column(type="text")
+     * @NotBlank( message="content commentary cant be empty" )
+     * @Length(
+     *      min="2" ,
+     *      max="512" ,
+     *      minMessage="commentary size min is 2 characters" ,
+     *      maxMessage="commentary size max is 512 characters" ,
+     *      normalizer="trim" )
      */
     private $content;
 
