@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
@@ -39,6 +41,13 @@ class Contact
 
     /**
      * @ORM\Column(type="text")
+     * @NotBlank( message="content contact cant be empty" )
+     * @Length(
+     *      min="2" ,
+     *      max="1024" ,
+     *      minMessage="contact content size min is 2 characters" ,
+     *      maxMessage="commentary size max is 1024 characters" ,
+     *      normalizer="trim" )
      */
     private $content;
 
