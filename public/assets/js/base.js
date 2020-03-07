@@ -154,6 +154,7 @@ class ConfirmAction {
 //     } ]
 // } ) ;
 
+// client handler input/textarea
 class HandlerInput {
 
     static callbackName( eventName ) {

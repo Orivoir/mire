@@ -24,6 +24,9 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', PasswordType::class , [
                 "required" => false
             ])
+            ->add('password', PasswordType::class , [
+                "required" => false
+            ])
         ;
     }
 

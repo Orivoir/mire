@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\EqualTo;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints\NotEqualTo;
@@ -50,6 +51,7 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @EqualTo( propertyPath="plainPassword" , message="password cant be diff" )
      */
     private $password;
 
@@ -60,6 +62,7 @@ class User implements UserInterface
      *      minMessage="password min size is 2 characters" ,
      *      maxMessage="password max size is 42 characters",
      * )
+     * @EqualTo( propertyPath="password" , message="password cant be diff" )
      */
     private $plainPassword;
 

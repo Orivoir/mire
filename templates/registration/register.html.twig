@@ -51,6 +51,11 @@
             {{ form_widget(registrationForm.plainPassword ) }}
         </div>
 
+        <div class="form-group">
+            {{form_label( registrationForm.password , "confirm password" )}}
+            {{ form_widget(registrationForm.password ) }}
+        </div>
+
         <input type="hidden" id="g-score" name="g-score" value="">
 
         <button
@@ -121,6 +126,7 @@
         // handler input
         const usernameInput = document.querySelector('input#registration_form_username') ;
         const passwordInput = document.querySelector('input#registration_form_plainPassword') ;
+        const passwordConfirmInput = document.querySelector('input#registration_form_password') ;
 
         const onFieldRequireError = function( input ) {
 
@@ -217,8 +223,11 @@
         } ) ;
         const handlerPasswordInput = new HandlerInput( passwordInput , callbacks ) ;
 
+        const handlerPasswordConfirmInput = new HandlerInput( passwordConfirmInput , callbacks ) ;
+
         handlerUsernameInput.require = true ;
         handlerPasswordInput.require = true ;
+        handlerPasswordConfirmInput.require = true ;
 
     </script>
 
