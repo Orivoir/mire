@@ -311,6 +311,22 @@ class UserController extends AbstractController
 
             $user->setIsRemove( true ) ;
 
+            if( $user->getAvatarName() != NULL ) {
+
+                // remove avatar from : "uploads_avatar" directory
+
+                $uploadsAvatarDirectory = $this->getParameter( "uploads_avatar" ) ;
+
+                $filepath = $uploadsAvatarDirectory . '/' . $user->getAvatarName() ;
+
+                $isRemoveAvatar = \unlink( $filepath ) ;
+
+                // if remove avatar file have fail
+                if( !$isRemoveAvatar ) {
+                    // @TODO: implement logger
+                }
+            }
+
             $em = $this->getDoctrine()->getManager() ;
 
             $em->persist( $user ) ;

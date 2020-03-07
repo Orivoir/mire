@@ -26,7 +26,7 @@ class FileUploader {
         return false ;
     }
 
-    public function upload( UploadedFile $file) {
+    public function upload( UploadedFile $file ) {
 
         $realFilename = \pathinfo( $file->getClientOriginalName(), PATHINFO_FILENAME ) ;
 
