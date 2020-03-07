@@ -8,6 +8,7 @@ use App\Entity\Commentary;
 use Doctrine\ORM\EntityManager;
 use App\Form\CommentaryFormType;
 use App\Repository\ArticleRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,14 +17,27 @@ class ArticleController extends AbstractController
 {
 
     /**
-     * @Route("/article", name="app_article_index")
+     * @Route("/article/{page}", name="app_article_index")
      */
-    public function index( ArticleRepository $articleRep ) {
+    public function index(
+        ?int $page = 1,
+        ArticleRepository $articleRep ,
+        PaginatorInterface $paginator ,
+        Request $rq
+    ) {
 
-        $articles = $articleRep->getLastPublish( 3 ) ;
+        $queryArticles = $articleRep->getAllVisibleQuery( 500 ) ;
+
+        $maxArticlesByPage = 5 ;
+
+        $range = $paginator->paginate(
+            $queryArticles ,
+            $page ?? 1 ,
+            $maxArticlesByPage ,
+        ) ;
 
         return $this->render('article/index.html.twig' , [
-            "articles" => $articles
+            "articles" => $range
         ] ) ;
     }
 
