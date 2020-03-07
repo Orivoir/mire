@@ -1,0 +1,6 @@
+.load-icon {
+
+    display: inline-block;
+    transform-origin: center center;
+    animation: spin .5s ease-in-out infinite ;
+}

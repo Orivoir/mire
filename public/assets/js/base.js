@@ -1,4 +1,17 @@
 /**
+ * @author Samuel Gaborieau
+ *
+ * client app base for all routes
+ *
+ * @summary \
+ *      - class **ConfirmAction**
+ *      - class **HandlerInput**
+ *      - handler: sleep screen ,matchMedia ( responsive dynamic ) , data-* ( dynamic attributes )
+ */
+
+
+/**
+ *
  * @classdesc open an moda for ask an **synchrone** confirm to user
  *
  * @constructor \
@@ -323,8 +336,56 @@ class HandlerInput {
 
 } ;
 
+
+if( !( window.fetch instanceof Function) ) {
+    throw "this browser do not support fetch API" ;
+}
+
 document.addEventListener('DOMContentLoaded' , () => {
 
+    // event close item
+    document.querySelectorAll('.close').forEach( closerItem => {
+
+        closerItem.addEventListener('click' , function() {
+
+            const targetSel = this.getAttribute( 'data-close' ) ;
+
+            const targetEl = document.querySelector( targetSel ) ;
+
+            const toRemove = this.getAttribute('data-class-remove') ;
+            const toAdd = this.getAttribute('data-class-add') ;
+            const toToggle = this.getAttribute('data-class-toggle') ;
+
+            [ 'remove' , 'add' , 'toggle' ]
+            .forEach( type => {
+
+                const current = eval(`to${type.charAt(0).toUpperCase() + type.slice(1,)}`) ;
+
+                current.split(' ').forEach( cls => {
+                    if( !!cls.length )
+                        targetEl.classList[type]( cls ) ;
+                } ) ;
+
+
+            } ) ;
+
+        } ) ;
+
+    } ) ;
+
+    // switch state sleep screen mode
+    window.addEventListener('blur' , () => {
+
+        document.body.classList.add('blur') ;
+
+    } ) ;
+    window.addEventListener('focus' , () => {
+
+        document.body.classList.remove('blur') ;
+    } ) ;
+
+    // resolve element 2 open by an element ".hamburger-menu"
+    // from attribute : "data-open" , contains an selector another element HTML
     document.querySelectorAll('.hamburger-menu').forEach( menuEl => {
 
         menuEl.addEventListener('click' , function() {
@@ -337,9 +398,13 @@ document.addEventListener('DOMContentLoaded' , () => {
 
             const target2open = document.querySelector( targetSel ) ;
 
+            // if selector is valid
             if( target2open instanceof Node ) {
 
+                // toggle class "open" to target element by hamburger menu
                 target2open.classList[ status ? "remove": "add" ]( 'open' ) ;
+            } else {
+                console.warn( "an hamburger menu have an 'data-open' attribute with an not valid selector" );
             }
         } ) ;
 
@@ -349,9 +414,17 @@ document.addEventListener('DOMContentLoaded' , () => {
 
         if( window.matchMedia("(min-width: 1100px)").matches ) {
 
-            document.querySelector('#header-menu-list').classList.remove('open') ;
+            // persist close menu switch small screen
+            document
+                .querySelector('#header-menu-list')
+                .classList.remove('open')
+            ;
 
-            document.querySelector('button[data-open="#header-menu-list"]').classList.remove('toggle') ;
+            // show button open menu for small screen
+            document
+                .querySelector('button[data-open="#header-menu-list"]')
+                .classList.remove('toggle')
+            ;
         }
 
     } ) ;
@@ -480,7 +553,53 @@ document.addEventListener('DOMContentLoaded' , () => {
 
     } )() ;
 
-    // resolve send mail activate buttons with ".mail-activate"
+    // try because:
+    //    CountMessageBox exists only if user is logged
+    try {
+
+        new CountMessageBox( data => {
+
+            document
+                .querySelectorAll('.new-messages-count')
+                .forEach( countElement => {
+
+                    if( data.count > 0 ) {
+                        countElement.textContent = data.count ;
+                    }
+
+            } ) ;
+
+        } ) ;
+
+    } catch( ReferenceError ) {/* silence is <feature /> */}
 
 } ) ;
 
+
+// welcome and warning log
+console.log(`%c
+───▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄───
+───█▒▒░░░░░░░░░▒▒█───
+────█░░█░░░░░█░░█────
+─▄▄──█░░░▀█▀░░░█──▄▄─
+█░░█─▀▄░░░░░░░▄▀─█░░█
+█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█
+█░░╦─╦╔╗╦─╔╗╔╗╔╦╗╔╗░░█
+█░░║║║╠─║─║─║║║║║╠─░░█
+█░░╚╩╝╚╝╚╝╚╝╚╝╩─╩╚╝░░█
+█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█
+DO NOT COPY/PASTE SCRIPT HERE
+THIS IS DANGEROUS FOR INTEGRITY OF YOUR PRIVATE DATAS .
+IF YOU DEVELOP YOU CAN CONTRIBUTE ON GIT REPOSITORY :
+https://github.com/orivoir/mire
+`,`
+    color:rgb( 42 , 192 , 42 );
+    font-weight:bold;
+    letter-spacing:.35rem;
+    background: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%),
+        linear-gradient(127deg, rgba(0,42,42,.8), rgba(42,42,0,0) 70.71%),
+        linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%)
+    ;
+    padding: 0 2vw;
+`
+) ;

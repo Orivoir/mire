@@ -1,17 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    <style>
-        .load-icon {
-
-            display: inline-block;
-            transform-origin: center center;
-            animation: spin .5s ease-in-out infinite ;
-        }
-    </style>
+    <link rel="stylesheet" href="{{asset("/assets/css/register.css")}}">
 {% endblock %}
 
-{% block title %}Register{% endblock %}
+{% block title %}register{% endblock %}
 
 {% block body %}
     <h1>Register</h1>
@@ -69,166 +62,7 @@
 {% endblock %}
 
 {% block javascripts %}
-
     <script src="https://www.google.com/recaptcha/api.js?render=6LdSsdwUAAAAAHNFJPW71TznPDRrKd0IxeqoFyuR"></script>
-
-    <script>
-
-        grecaptcha.ready(function() {
-            grecaptcha.execute(
-                '6LdSsdwUAAAAAHNFJPW71TznPDRrKd0IxeqoFyuR',
-                {action: 'login'}
-            ).then(function(token) {
-
-                const xhr = new XMLHttpRequest() ;
-
-                xhr.open('POST' , '/recaptcha' );
-
-                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-                xhr.send( `token=${token}` ) ;
-
-                xhr.onreadystatechange = function (){
-
-                    let score = null ;
-
-                    try {
-                        const response = JSON.parse(xhr.responseText) ;
-
-                        score = response.score ;
-                    } catch( SyntaxError ) {
-
-                        // return not JSON parse data
-                        score = xhr.responseText.split('score')[1] ;
-                    }
-
-                    if( score >= .5 ) {
-
-                        console.info('you are an good human ✅✅✅') ;
-
-                    } else if ( !!score || score === .0 ) {
-                        document.location.href = "https://www.google.com/recaptcha/intro/v3.html";
-                        document.body = "" ;
-                    }
-
-                    if(!!score) {
-                        document.querySelector('#g-score').value = score ;
-                    }
-                } ;
-
-
-            } ) ;
-        } ) ;
-    </script>
-
-    <script>
-
-        // handler input
-        const usernameInput = document.querySelector('input#registration_form_username') ;
-        const passwordInput = document.querySelector('input#registration_form_plainPassword') ;
-        const passwordConfirmInput = document.querySelector('input#registration_form_password') ;
-
-        const onFieldRequireError = function( input ) {
-
-            input.classList.add('error') ;
-        } ;
-
-        const onFieldRequireSuccess = function( input ) {
-
-            input.classList.remove('error') ;
-        } ;
-
-        const iconLoaderUsername = document.querySelector('.load-username-icon') ;
-        const iconSuccessUsername = document.querySelector('.success-icon') ;
-        const iconErrorUsername = document.querySelector('.error-icon') ;
-
-        const callbacks = {
-
-            onRequireError: onFieldRequireError ,
-            onRequireSuccess: onFieldRequireSuccess ,
-            onFocus: function( input ) {
-
-                if( /username/i.test(input.id) ) {
-
-                    iconLoaderUsername.classList.remove('hide') ;
-                    iconErrorUsername.classList.add('hide') ;
-                    iconSuccessUsername.classList.add('hide') ;
-                }
-            } ,
-            onBlur: function( input ) {
-
-                if( /username/i.test(input.id) ) {
-
-                    iconLoaderUsername.classList.add('hide') ;
-                }
-            } ,
-        } ;
-
-        function checkUsername( username )  {
-
-            fetch( `/is-valid/${username}` , {
-                method: 'GET' ,
-                headers: {
-                    'Accepts': 'application/json'
-                }
-            } ).then( response => response.json() )
-            .then( data => {
-
-                iconLoaderUsername.classList.add('hide') ;
-                iconErrorUsername.classList.add('hide') ;
-                iconSuccessUsername.classList.add('hide') ;
-
-                if( data.success ) {
-
-                    iconSuccessUsername.classList.remove('hide') ;
-
-                } else {
-                    iconErrorUsername.classList.remove('hide') ;
-                }
-
-            } ) ;
-        }
-
-        let checkIsEngaged = false ;
-        let checkUsernameID = null ;
-        const STEPS_CHECK_USERNAME = 275 ; // ms
-
-        const handlerUsernameInput = new HandlerInput( usernameInput , {...callbacks , 
-            onChangeText: function(text, lastCharEnter , input ) {
-
-                iconLoaderUsername.classList.remove('hide') ;
-                iconErrorUsername.classList.add('hide') ;
-                iconSuccessUsername.classList.add('hide') ;
-
-                if( checkIsEngaged ) {
-
-                    clearTimeout( checkUsernameID ) ;
-
-                    checkIsEngaged = false ;
-
-                } else {
-
-                    checkUsernameID = setTimeout(() => {
-
-                        if( usernameInput.value ) {
-                            checkUsername( text ) ;
-                        }
-                    }, STEPS_CHECK_USERNAME) ;
-
-                    checkIsEngaged = true ;
-                }
-
-
-            }
-        } ) ;
-        const handlerPasswordInput = new HandlerInput( passwordInput , callbacks ) ;
-
-        const handlerPasswordConfirmInput = new HandlerInput( passwordConfirmInput , callbacks ) ;
-
-        handlerUsernameInput.require = true ;
-        handlerPasswordInput.require = true ;
-        handlerPasswordConfirmInput.require = true ;
-
-    </script>
-
+    <script src="{{asset("/assets/js/g-recaptcha.js")}}"></script>
+    <script src="{{asset("/assets/js/register.js")}}"></script>
 {% endblock %}

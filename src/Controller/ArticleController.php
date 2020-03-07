@@ -24,7 +24,7 @@ class ArticleController extends AbstractController
 
         return $this->render('article/index.html.twig' , [
             "articles" => $articles
-        ] );
+        ] ) ;
     }
 
     /**
