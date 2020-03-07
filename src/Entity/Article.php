@@ -257,4 +257,14 @@ class Article
 
         return $this;
     }
+
+    /**
+     * @return integer - days from create at
+     */
+    public function getDaysCreateAt(): ?int {
+
+        $timestampUnixFromCreateArticle = ( ( new \DateTime() )->getTimestamp() ) - ( $this->createAt->getTimestamp() ) ;
+
+        return $timestampUnixFromCreateArticle / 60 / 60 / 24 ;
+    }
 }
