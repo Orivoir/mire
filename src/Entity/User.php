@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\EqualTo;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints\NotEqualTo;
@@ -51,19 +50,9 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @EqualTo( propertyPath="plainPassword" , message="password cant be diff" )
      */
     private $password;
 
-    /**
-     * @NotBlank
-     * @Length(
-     *      min=2, max=255 ,
-     *      minMessage="password min size is 2 characters" ,
-     *      maxMessage="password max size is 42 characters",
-     * )
-     * @EqualTo( propertyPath="password" , message="password cant be diff" )
-     */
     private $plainPassword;
 
     /**
@@ -166,12 +155,23 @@ class User implements UserInterface
      */
     private $avatarName=null;
 
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    private $tokenActivate;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->commentaries = new ArrayCollection();
         $this->createAt = new \DateTime() ;
+
+        // token for CSRF Fail this token is shared with JavaScript
         $this->token = \md5( \str_shuffle( "le chat aime les arbres :-)" ) ) ;
+
+        // token for activate account not shared with JavaScript
+        $this->tokenActivate = \md5( \str_shuffle( "le chat n'aime pas les arbres :-)" ) ) ;
+
         $this->messages = new ArrayCollection();
 
         $this->messageBox = new MessageBox() ;
@@ -608,6 +608,18 @@ class User implements UserInterface
     public function getAvatarPath() {
 
         return "/assets" . (!!$this->avatarName ? '/uploads/avatar/' . $this->avatarName : '/images/pawn.svg' ) ;
+    }
+
+    public function getTokenActivate(): ?string
+    {
+        return $this->tokenActivate;
+    }
+
+    public function setTokenActivate(string $tokenActivate): self
+    {
+        $this->tokenActivate = $tokenActivate;
+
+        return $this;
     }
 
 }

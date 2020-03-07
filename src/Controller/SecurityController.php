@@ -47,7 +47,7 @@ class SecurityController extends AbstractController
      */
     public function activate( string $token , UserRepository $userRep ) {
 
-        $user = $userRep->findOneBy( ['token' => $token] ) ;
+        $user = $userRep->findOneBy( ['tokenActivate' => $token] ) ;
 
         if( !$user ) {
 
@@ -56,7 +56,7 @@ class SecurityController extends AbstractController
 
         } else if(
             $user->getId() !== $this->getUser()->getId() ||
-            $user->getToken() !== $token
+            $user->getTokenActivate() !== $token
         ) {
 
             // 400 invalid token mute with 404
