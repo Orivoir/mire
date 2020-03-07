@@ -188,6 +188,27 @@ class Article
     /**
      * @return Collection|Commentary[]
      */
+    public function getCommentariesVisible(): Collection {
+
+        $allCommentaries = $this->commentaries ;
+
+        $visibleCommentaries = new ArrayCollection() ;
+
+        foreach( $allCommentaries as $commentary ) {
+
+            if( !$commentary->getIsRemove() ) {
+
+                $visibleCommentaries[] = $commentary ;
+            }
+
+        }
+
+        return $visibleCommentaries ;
+    }
+
+    /**
+     * @return Collection|Commentary[]
+     */
     public function getCommentaries(): Collection
     {
         return $this->commentaries;

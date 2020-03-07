@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\UserRepository;
 use App\Repository\ArticleRepository;
+use App\Repository\ContactRepository;
 use App\Repository\CommentaryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -121,6 +122,36 @@ class AdminController extends AbstractController
         ) ;
 
         return $this->render('admin/commentaries.html.twig' , [
+            "range" => $range
+        ] ) ;
+    }
+
+    /**
+     * @Route("/admin/feedback/{page}" , methods={"GET"} , name="app_admin_feedback")
+     */
+    public function feedback(
+        int $page = 1 ,
+        ContactRepository $contactRep ,
+        PaginatorInterface $paginator ,
+        Request $rq
+    ) {
+
+        $username = $this->getUser()->getUsername() ;
+
+        if( $username != self::ADMIN_USERNAME  ) {
+
+            return $this->render('not-found.html.twig') ;
+        }
+
+        $query = $contactRep->findAllQuery() ;
+
+        $range = $paginator->paginate(
+            $query ,
+            $page ?? 1 ,
+            3
+        ) ;
+
+        return $this->render('admin/feedback.html.twig' , [
             "range" => $range
         ] ) ;
     }

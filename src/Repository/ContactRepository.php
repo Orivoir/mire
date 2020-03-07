@@ -47,4 +47,9 @@ class ContactRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllQuery() {
+
+        return $this->createQueryBuilder('c')->getQuery() ;
+    }
 }
