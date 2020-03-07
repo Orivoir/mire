@@ -644,4 +644,14 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return integer - days from create at
+     */
+    public function getDaysCreateAt(): ?int {
+
+        $timestampUnixFromCreateAccount = ( ( new \DateTime() )->getTimestamp() ) - ( $this->createAt->getTimestamp() ) ;
+
+        return $timestampUnixFromCreateAccount / 60 / 60 / 24 ;
+    }
+
 }
