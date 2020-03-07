@@ -26,7 +26,7 @@ class UserFixtures extends Fixture
 
         for( $i = 0 , $size = \mt_rand( 15 , 60 ) ; $i < $size ; $i++  ) {
 
-            $user = new User() ;
+            $user = new User( User::FACTORY ) ;
 
             $user->setPlainPassword("a") ;
 

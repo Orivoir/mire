@@ -33,7 +33,7 @@ class CommentaryFixtures extends Fixture implements DependentFixtureInterface
 
         for( $i = 0 , $size = \mt_rand( 30,65 ) ; $i < $size ; $i++ ) {
 
-            $commentary = new Commentary();
+            $commentary = new Commentary( Commentary::FACTORY );
 
             $commentary->setContent( $faker->sentence( 15 , true ) ) ;
 

@@ -27,7 +27,7 @@ class ContactFixtures extends Fixture implements DependentFixtureInterface
 
         for( $i = 0 , $size = \mt_rand( 9 , 42 ) ; $i < $size ; $i++ ) {
 
-            $contact = new Contact();
+            $contact = new Contact( Contact::FACTORY );
 
             $contact->setTitle( $faker->sentence( 4 , true ) ) ;
             $contact->setContent( $faker->sentence( 15 , true ) ) ;

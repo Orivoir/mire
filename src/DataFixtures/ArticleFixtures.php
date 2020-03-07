@@ -27,7 +27,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
 
         for( $i = 0 , $size = \mt_rand( 10 , 35 ) ; $i < $size ; $i++ ) {
 
-            $article = new Article() ;
+            $article = new Article( Article::FACTORY ) ;
 
             $article
                 ->setTitle( $faker->words( 2 , true ) )
