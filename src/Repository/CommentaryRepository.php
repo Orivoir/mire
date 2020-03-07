@@ -47,4 +47,10 @@ class CommentaryRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllQuery() {
+
+        return $this->createQueryBuilder('u')->getQuery() ;
+    }
+
 }

@@ -1,0 +1,86 @@
+{% extends "base-admin.html.twig" %}
+
+{% block title %}users{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset("/assets/css/admin/reader-db.css")}}">
+{% endblock %}
+
+{% block body %}
+
+    <section>
+
+        <header>
+            <h1>{{range.getTotalItemCount}} user{{range.getTotalItemCount > 1 ? "s":""}} registred</h1>
+        </header>
+
+        <div class="wrap-pgination">
+            {{ knp_pagination_render(range) }}
+        </div>
+
+        <aside>
+
+            <ul class="flex-list">
+
+                {% for user in range %}
+                    <li>
+                        <section>
+
+                            <header>
+                                <h1>{{user.username}} ({{user.id}}) </h1>
+
+                                {% if user.email != NULL %}
+                                    <h2>{{user.email}}</h2>
+                                {% endif %}
+
+                                <h3>account is valid : {{user.isValid ? "yes" : "no"}} </h3>
+                                <h3>account is remove : {{user.isRemove ? "yes" : "no"}} </h3>
+
+                                {% if user.isRemove == true %}
+                                    <h3>account remove at {{user.removeAt|date('d/m/Y H:i:s')}} </h3>
+                                {% endif %}
+                            </header>
+
+                            <aside>
+
+                                <h3>identity</h3>
+
+                                <p>first name : {{user.fName ?? "not renseigned"}}</p>
+                                <p>last name : {{user.name ?? "not renseigned"}}</p>
+
+                                <p>
+                                    account create at {{user.createAt|date('d/m/Y H:i:s')}}
+                                </p>
+
+                            </aside>
+
+                            <footer>
+
+                                <a
+                                    href=""
+                                    class="btn blue"
+                                >
+                                    more with {{user.username|slice(8)}}...
+                                </a>
+
+                            </footer>
+
+                        </section>
+                    </li>
+                {% endfor %}
+
+            </ul>
+
+        </aside>
+
+        <footer>
+
+            <div class="wrap-pgination">
+                {{ knp_pagination_render(range) }}
+            </div>
+
+        </footer>
+
+    </section>
+
+{% endblock %}

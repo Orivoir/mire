@@ -60,7 +60,7 @@ class ArticleController extends AbstractController
                     ] , 302 ) ;
                 } else {
 
-                    $commentaries = $article->getCommentaries() ;
+                    $commentaries = $article->getCommentariesVisible() ;
 
                     $commentary = new Commentary() ;
                     $commentaryForm = $this->createForm( CommentaryFormType::class , $commentary ) ;
@@ -101,7 +101,7 @@ class ArticleController extends AbstractController
 
         if( !$this->getUser()->getIsValid() ) {
 
-            // here user have not valid email
+            // here user have not valid account
             // not access write article
             return $this->render('not-valid.html.twig' , [
                 "user" => $this->getUser()
@@ -181,10 +181,6 @@ class ArticleController extends AbstractController
 
                 // here an user have try execute an action with an other
                 // token user .
-
-                // @TODO: change user token of author article
-                // because data is corrompt
-
                 $backJSON['code'] = 404 ;
                 $backJSON['details'] = "article not exists";
 

@@ -48,6 +48,11 @@ class ArticleRepository extends ServiceEntityRepository
     }
     */
 
+    public function findAllQuery() {
+
+        return $this->createQueryBuilder('a')->getQuery() ;
+    }
+
     public function createStaticQuery( string $constraint , ?int $limit ) {
 
         $query = $this

@@ -92,6 +92,11 @@ class Commentary
     {
         $this->isRemove = $isRemove;
 
+        if( !!$this->isRemove ) {
+
+            $this->removeAt = new \DateTime() ;
+        }
+
         return $this;
     }
 

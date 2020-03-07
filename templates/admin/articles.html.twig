@@ -1,0 +1,78 @@
+{% extends "base-admin.html.twig" %}
+
+{% block title %}users{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset("/assets/css/admin/reader-db.css")}}">
+{% endblock %}
+
+{% block body %}
+
+    <section>
+
+        <header>
+            <h1>{{range.getTotalItemCount}} article{{range.getTotalItemCount > 1 ? "s":""}} registred</h1>
+        </header>
+
+        <div class="wrap-pgination">
+            {{ knp_pagination_render(range) }}
+        </div>
+
+        <aside>
+
+            <ul class="flex-list">
+
+                {% for article in range %}
+                    <li>
+                        <section>
+
+                            <header>
+                                <h1>{{article.title}} ({{article.id}}) </h1>
+
+                                <h2>
+                                    Author:
+                                    <a
+                                        href=""
+                                    >
+                                        {{article.user.username}}
+                                    </a>
+                                </h2>
+
+                                <h3>article is remove : {{article.isRemove ? "yes" : "no"}} </h3>
+
+                                {% if article.isRemove == true %}
+                                    <h3>article remove at {{user.removeAt|date('d/m/Y H:i:s')}} </h3>
+                                {% endif %}
+                            </header>
+
+                            <footer>
+
+                                <a
+                                    href=""
+                                    class="btn blue"
+                                >
+                                    more with {{article.title|slice(8)}}...
+                                </a>
+
+                            </footer>
+
+                        </section>
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </aside>
+
+        <footer>
+
+            <div class="wrap-pgination">
+                {{ knp_pagination_render(range) }}
+            </div>
+
+        </footer>
+
+    </section>
+
+{% endblock %}

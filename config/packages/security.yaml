@@ -36,5 +36,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/(articles?|u(ser)?|activate|messages?), roles: ROLE_USER }
+
+        # check if user is an admin with username
         - { path: ^/admin, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }

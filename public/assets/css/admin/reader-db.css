@@ -1,0 +1,17 @@
+div.wrap-pgination {
+
+    background: rgb( 42,42,42 ) ;
+    padding: 1vh 2vw;
+    text-align: center;
+}
+
+div.wrap-pgination .pagination .current {
+
+    color: #2ecc71
+}
+
+div.wrap-pgination .pagination .page ,
+div.wrap-pgination .pagination .current {
+
+    font-size: 22px;
+}

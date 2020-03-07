@@ -1,0 +1,86 @@
+{% extends "base-admin.html.twig" %}
+
+{% block title %}feedback{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset("/assets/css/admin/reader-db.css")}}">
+{% endblock %}
+
+{% block body %}
+
+    <section>
+
+        <header>
+            <h1>{{range.getTotalItemCount}} feedback{{range.getTotalItemCount > 1 ? "s":""}} registred</h1>
+        </header>
+
+        <div class="wrap-pgination">
+            {{ knp_pagination_render(range) }}
+        </div>
+
+        <aside>
+
+            <ul class="flex-list">
+
+                {% for feedb in range %}
+                    <li>
+                        <section>
+                            <header>
+                                <h1>
+                                    {% if feedb.user %}
+                                        author: {{feedb.user.username}}
+                                    {% else %}
+                                        {{feedb.title}} ({{feedb.id}})
+                                    {% endif %}
+                                </h1>
+
+                                {% if feedb.user %}
+                                    <h2>{{feedb.title}} ({{feedb.id}}) </h2>
+                                {% else %}
+                                    <h2>author: anonyme</h2>
+                                {% endif %}
+                            </header>
+
+                            <aside>
+
+                                <p>
+                                    content: {{feedb.content}}
+                                </p>
+
+                                <p>
+                                    send at: {{feedb.sendAt|date('d/m/Y H:i:s')}}
+                                </p>
+
+                            </aside>
+
+
+                            <footer>
+
+                                <a
+                                    href=""
+                                    class="btn blue"
+                                >
+                                    more with {{feedb.content|slice(0,8)}}...
+                                </a>
+
+                            </footer>
+
+                        </section>
+                    </li>
+                {% endfor %}
+
+            </ul>
+
+        </aside>
+
+        <footer>
+
+            <div class="wrap-pgination">
+                {{ knp_pagination_render(range) }}
+            </div>
+
+        </footer>
+
+    </section>
+
+{% endblock %}

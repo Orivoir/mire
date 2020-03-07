@@ -576,6 +576,19 @@ a {
     }
 }
 
+.flex-list {
+
+    display: flex;
+    flex-wrap: wrap;
+    width: 85%;
+    width: 3vh auto;
+}
+
+.flex-list li {
+
+    margin: 1.25vh 3vw;
+}
+
 button.error , .btn.error {
 
     animation: wizz .3s ease-in-out;

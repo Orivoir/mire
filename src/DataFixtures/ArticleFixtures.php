@@ -4,11 +4,13 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Article;
+use App\DataFixtures\UserFixtures;
 use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class ArticleFixtures extends Fixture
+class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
 
     private $userRep ;
@@ -59,5 +61,15 @@ class ArticleFixtures extends Fixture
         }
 
         $em->flush();
+    }
+
+    /**
+     * @see DependentFixtureInterface
+     */
+    public function getDependencies() {
+
+        return [
+            UserFixtures::class
+        ] ;
     }
 }
