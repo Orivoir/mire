@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Faker\Factory;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -12,9 +13,29 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class Contact
 {
 
-    public function __construct() {
+    /**
+     * @var Factory boolean
+     *
+     * if user factory should be build generate random date from construct
+     */
+    const FACTORY = true ;
 
-        $this->sendAt = new \DateTime() ;
+
+    public function __construct( $factory = false ) {
+
+        if( !$factory ) {
+            // real account
+            $this->sendAt = new \DateTime() ;
+        } else {
+
+            // generate random date create account for this factory user
+            $faker = Factory::create('fr_FR') ;
+
+            $maxDate = 'now' ;
+            $timezone = 'Europe/Paris' ;
+
+            $this->sendAt = $faker->dateTime( $maxDate , $timezone ) ;
+        }
     }
 
     /**

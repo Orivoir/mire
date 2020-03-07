@@ -29,7 +29,7 @@ class MessageFixtures extends Fixture implements DependentFixtureInterface
 
         for( $i=0,$size= \mt_rand(50,160); $i < $size; $i++) {
 
-            $message = new Message();
+            $message = new Message( Message::FACTORY );
 
             $message->setContent( $faker->sentence( 10 , true ) ) ;
 

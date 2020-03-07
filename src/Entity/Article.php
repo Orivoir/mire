@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 
+use Faker\Factory;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
@@ -14,6 +15,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Article
 {
+
+    /**
+     * @var Factory boolean
+     *
+     * if user factory should be build generate random date from construct
+     */
+    const FACTORY = true ;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -74,10 +83,22 @@ class Article
         return ( new Slugify() )->slugify( $this->title ) ;
     }
 
-    public function __construct()
+    public function __construct( $factory = false )
     {
-        $this->commentaries = new ArrayCollection();
-        $this->createAt = new \DateTime();
+        $this->commentaries = new ArrayCollection() ;
+
+        if( !$factory ) {
+            // real account
+            $this->createAt = new \DateTime() ;
+        } else {
+            // generate random date create account for this factory user
+            $faker = Factory::create('fr_FR') ;
+
+            $maxDate = 'now' ;
+            $timezone = 'Europe/Paris' ;
+
+            $this->createAt = $faker->dateTime( $maxDate , $timezone ) ;
+        }
     }
 
     public function getId(): ?int

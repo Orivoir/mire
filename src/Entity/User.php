@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Faker\Factory;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
@@ -23,6 +24,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User implements UserInterface
 {
+
+    /**
+     * @var Factory boolean
+     *
+     * if user factory should be build generate random date from construct
+     */
+    const FACTORY = true ;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -160,11 +169,24 @@ class User implements UserInterface
      */
     private $tokenActivate;
 
-    public function __construct()
+    public function __construct( $factory = false )
     {
         $this->articles = new ArrayCollection();
         $this->commentaries = new ArrayCollection();
-        $this->createAt = new \DateTime() ;
+
+        if( !$factory ) {
+            // real account
+            $this->createAt = new \DateTime() ;
+        } else {
+
+            // generate random date create account for this factory user
+            $faker = Factory::create('fr_FR') ;
+
+            $maxDate = 'now' ;
+            $timezone = 'Europe/Paris' ;
+
+            $this->createAt = $faker->dateTime( $maxDate , $timezone ) ;
+        }
 
         // token for CSRF Fail this token is shared with JavaScript
         $this->token = \md5( \str_shuffle( "le chat aime les arbres :-)" ) ) ;
