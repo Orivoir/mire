@@ -61,6 +61,14 @@
 
         {% endif %}
 
+            {#
+                not export inner "*.js"
+                because contains vars with twig value
+             #}
+            <script>
+                const IS_LOGGED = !!{{app.user != NULL ? 'true':'false'}} ;
+            </script>
+
         {% if app.user != NULL %}
             {#
                 not export inner "*.js"

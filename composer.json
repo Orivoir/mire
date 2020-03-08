@@ -23,14 +23,14 @@
         "symfony/serializer": "5.0.*",
         "symfony/twig-pack": "1.0.*",
         "symfony/validator": "5.0.*",
-        "symfony/var-dumper": "5.0.*",
         "symfony/yaml": "5.0.*"
     },
     "require-dev": {
-		"symfony/maker-bundle": "^1.14",
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
         "fzaninotto/faker": "^1.9",
+        "symfony/maker-bundle": "^1.14",
         "symfony/profiler-pack": "^1.0",
-        "doctrine/doctrine-fixtures-bundle": "^3.3"
+        "symfony/var-dumper": "5.0.*"
     },
     "config": {
         "preferred-install": {

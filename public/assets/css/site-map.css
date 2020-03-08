@@ -1,0 +1,33 @@
+.routes-wrap {
+
+    position: relative;
+    min-width: 20vw;
+    min-height: 20vh;
+
+    padding: 1vh 1.2vw;
+}
+
+
+.routes-wrap ol {
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.routes-wrap ol li p {
+    margin: 0;
+}
+
+.routes-wrap ol li {
+
+    padding: .85vh 1.2vw;
+    margin: 4vh 3vw;
+    color: #fff;
+
+    font-size: 19px;
+}
+
+.routes-wrap ol li a {
+
+    color: #2ea2ef;
+}
