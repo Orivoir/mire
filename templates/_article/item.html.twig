@@ -1,4 +1,29 @@
-<li class="article-item {{article.id % 2 == 0 ? "even"}}">
+{% if article.backgroundName != NULL %}
+
+    {# attach background image then exists #}
+    <style>
+
+        #wrap-article-{{article.id}} {
+
+            background-image: url( '{{ asset("/assets/uploads/articles/" ~ article.backgroundName ) }}' ) ;
+            background-size: cover;
+            background-repeat: no-repeat;
+
+        }
+
+        #article-{{article.id}} {
+
+            background-color: rgba( 42,42,42,.8 );
+        }
+
+    </style>
+
+{% endif %}
+
+<li
+    class="article-item {{article.id % 2 == 0 ? "even"}}"
+    id="wrap-article-{{article.id}}"
+>
 
     <section
         id="article-{{article.id}}"

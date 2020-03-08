@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     uploads_avatar: '%kernel.project_dir%/public/assets/uploads/avatar'
+    uploads_bg_article: '%kernel.project_dir%/public/assets/uploads/articles'
 
 services:
     # default configuration for services in *this* file
