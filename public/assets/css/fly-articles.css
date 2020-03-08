@@ -1,0 +1,81 @@
+#fly-articles {
+
+    background: rgb(42, 42, 42) ;
+    position: fixed;
+    z-index: 99999;
+    right: 0;
+    bottom: 12.5vh;
+    padding: .5vh .65vw;
+    height: 95px;
+    width: 145px;
+    transition: .2s ease-in-out;
+}
+
+#fly-articles:hover {
+
+    height: 140px;
+    width: 180px;
+}
+
+#fly-articles::before {
+
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 3px;
+
+    transform-origin: top left;
+    transform: scaleX( 0 ) translateY( -3px ) ;
+
+    background: #2ea2ef;
+
+}
+
+#fly-articles.start::before {
+
+    animation: slider 4.2s linear infinite;
+}
+
+@keyframes slider {
+
+    from {
+
+        transform: scaleX( 0 ) translateY( -3px ) ;
+    } to {
+        transform: scaleX( 1 ) translateY( -3px ) ;
+    }
+}
+
+#fly-articles ul {
+
+
+}
+
+#fly-articles ul li {
+
+    display: none;
+}
+
+#fly-articles ul li p.time-fly-article {
+
+    font-size: 13px;
+    color: rgb( 172,172,172 );
+    font-style: italic;
+}
+
+#fly-articles ul li p.content-fly-article {
+
+    font-size: 17px;
+    color: #fff;
+    letter-spacing: .05rem;
+    word-break: break-all;
+}
+
+#fly-articles ul li.current {
+
+    display: block;
+
+}

@@ -72,4 +72,27 @@ class ApiController extends AbstractController {
 
     }
 
+    /**
+     * @Route("/api/last-articles/{many}" , methods={"GET"} , name="app_api_last_articles" )
+     */
+    public function lastArticles( ?int $many = 3 , ArticleRepository $articleRep ) {
+
+        $lastArticles = $articleRep->getLastPublish( $many ) ;
+
+        $lastArticlesJSON = [] ;
+
+        foreach( $lastArticles as $article ) {
+
+            $lastArticlesJSON[] = $this->serializer->serialize(
+                $article , 'json'
+            ) ;
+        }
+
+        return $this->json([
+            "count" => \count( $lastArticlesJSON ) ,
+            "articles" => $lastArticlesJSON ,
+            "success" => true
+        ] ) ;
+    }
+
 }
