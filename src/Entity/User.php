@@ -419,6 +419,26 @@ class User implements UserInterface
         return $this->articles;
     }
 
+    /**
+     * @return Collection|Article[]
+     */
+    public function getArticlesVisible(): Collection
+    {
+        $allArticles = $this->articles ;
+
+        $articlesVisible = new ArrayCollection() ;
+
+        foreach( $allArticles as $article ) {
+
+            if( !$article->getIsRemove() ) {
+
+                $articlesVisible[] = $article ;
+            }
+        }
+
+        return $articlesVisible ;
+    }
+
     public function addArticle(Article $article): self
     {
         if (!$this->articles->contains($article)) {

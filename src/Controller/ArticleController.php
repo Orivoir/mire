@@ -176,7 +176,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/article/:token/:id" , methods={"DELETE"} , name="app_article_delete" )
+     * @Route("/article/{token}/{id}" , methods={"DELETE"} , name="app_article_delete" )
      */
     public function delete(
         string $token ,
@@ -184,7 +184,9 @@ class ArticleController extends AbstractController
         ArticleRepository $articleRep
     ) {
 
-        $backJSON = [] ;
+        $backJSON = [
+            'success' => true
+        ] ;
 
         if( $this->getUser()->getToken() !== $token ) {
 
@@ -193,6 +195,7 @@ class ArticleController extends AbstractController
 
             // bad request
             $backJSON['code'] = 400 ;
+            $backJSON['success'] = false ;
             $backJSON['details'] = "invalid user token";
 
         } else {
@@ -203,6 +206,7 @@ class ArticleController extends AbstractController
 
                 // 404 , not exists or already remove
                 $backJSON['code'] = 404 ;
+                $backJSON['success'] = false ;
                 $backJSON['details'] = "article not exists";
 
             } else if(
@@ -216,10 +220,28 @@ class ArticleController extends AbstractController
                 // here an user have try execute an action with an other
                 // token user .
                 $backJSON['code'] = 404 ;
+                $backJSON['success'] = false ;
                 $backJSON['details'] = "article not exists";
 
             } else {
                 // here action delete is accept
+
+                if( $article->getBackgroundName() != NULL ) {
+
+                    // remove background image from: 'uploads_bg_article' directory
+
+                    $uploadsBackgroundDirectory = $this->getParameter('uploads_bg_article') ;
+
+                    $filepath = $uploadsBackgroundDirectory . '/' . $article->getBackgroundName() ;
+
+                    $isRemoveBackground = \unlink( $filepath ) ;
+
+                    // if remove background have fail
+                    if( $isRemoveBackground ) {
+
+                        // @TODO: implement logger interface
+                    }
+                }
 
                 $em = $this->getDoctrine()->getManager() ;
 
