@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Repository\ArticleRepository;
 use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\RouterInterface;
 
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -91,6 +92,72 @@ class ApiController extends AbstractController {
         return $this->json([
             "count" => \count( $lastArticlesJSON ) ,
             "articles" => $lastArticlesJSON ,
+            "success" => true
+        ] ) ;
+    }
+
+    /**
+     * @Route("/api/site-map" , methods={"GET"} , name="api_site_map" )
+     */
+    public function siteMap( RouterInterface $router ) {
+
+        $isLogged = $this->getUser() != NULL ;
+        $routes = $router->getRouteCollection() ;
+
+        // home
+        // /a/{page}
+        // /contact
+        // /about
+
+        // if logged
+            // /u/{username}
+            // /u/box
+            // /u/my/settings
+            // /u/my/articles
+            // /u/my/subjects
+        // else
+            // /login
+            // /register
+
+        $routesJSON = [] ;
+
+        foreach( $routes as $name => $route ) {
+
+            if(
+                !\preg_match(
+                    "#(profiler|wdt$|error$|api|admin|activate|site_map|delete|app_main_search|app_message_mark_as_read|app_recaptcha|app_logout|app_user_block|app_is_valid_username|app_user_count_messages|app_article_details|app_message_|app_user_index)#"
+                    , $name
+                )
+            ) {
+
+                if( $isLogged ) {
+
+                    if( !\preg_match( "#(app_login|app_register)#" , $name ) ) {
+
+                        $routesJSON[] = [
+                            "name" => $name ,
+                            "path" => $route->getPath()
+                        ] ;
+
+                    }
+
+                } else {
+
+                    if( !\preg_match("#(app_user|app_article_new|app_message)#" , $name ) ) {
+
+                        $routesJSON[] = [
+                            "name" => $name ,
+                            "path" => $route->getPath()
+                        ] ;
+                    }
+
+                }
+
+            }
+        }
+
+        return $this->json( [
+            "routes" => $routesJSON ,
             "success" => true
         ] ) ;
     }

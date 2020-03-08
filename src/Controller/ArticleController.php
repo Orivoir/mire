@@ -17,7 +17,7 @@ class ArticleController extends AbstractController
 {
 
     /**
-     * @Route("/article/{page}", name="app_article_index")
+     * @Route("/a/{page}", name="app_article_index")
      */
     public function index(
         ?int $page = 1,

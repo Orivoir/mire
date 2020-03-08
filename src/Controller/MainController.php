@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 class MainController extends AbstractController
 {
+
     /**
      * @Route("/", name="app_main_index")
      */
@@ -29,7 +31,8 @@ class MainController extends AbstractController
      */
     public function siteMap() {
 
-        // :-)
+        return $this->render('main/site-map.html.twig') ;
+
     }
 
     /**
