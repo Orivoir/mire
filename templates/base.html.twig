@@ -15,6 +15,10 @@
         <link href="{{asset("/assets/css/footer.css")}}" rel="stylesheet">
         <link href="{{asset("/assets/css/confirm-action.css")}}" rel="stylesheet">
 
+        {% if app.user == NULL %}
+            {# fly article css #}
+        {% endif %}
+
         <link rel="icon" href="{{asset("/assets/images/mire.svg")}}" size="42x42">
         {% block stylesheets %}{% endblock %}
     </head>
@@ -28,6 +32,12 @@
                 {% include "_message-flash.html.twig" %}
 
                 {% block body %}{% endblock %}
+
+                {% if app.user == NULL %}
+                    {# fly articles skeleton #}
+
+                {% endif %}
+
             </section>
 
             <footer>
@@ -67,6 +77,10 @@
 
         <script src="{{asset("/assets/js/base.js")}}"></script>
         <script src="{{asset("/assets/js/menu.js")}}"></script>
+
+        {% if app.user == NULL %}
+            {# fly article JavaScript #}
+        {% endif %}
 
         {% block javascripts %}{% endblock %}
     </body>
