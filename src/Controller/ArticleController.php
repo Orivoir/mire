@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Entity\Commentary;
+use App\Services\FileUploader;
 use Doctrine\ORM\EntityManager;
 use App\Form\CommentaryFormType;
 use App\Repository\ArticleRepository;
@@ -132,6 +133,25 @@ class ArticleController extends AbstractController
             if( $form->isSubmitted() && $form->isValid() ) {
 
                 $em = $this->getDoctrine()->getManager() ;
+
+                $background = $form->get('background')->getData() ;
+
+                if( $background ) {
+
+                    $fileUp = new FileUploader( $this->getParameter('uploads_bg_article') ) ;
+
+                    $filename = $fileUp->upload( $background ) ;
+
+                    if( !!$filename ) {
+
+                        $article->setBackgroundName( $filename ) ;
+
+                    } else {
+
+                        // @TODO: implements an logger interface
+                        $this->addFlash('error' , 'background article cant be uploads' ) ;
+                    }
+                }
 
                 $article->setUser( $this->getUser() ) ;
 

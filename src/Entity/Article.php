@@ -78,6 +78,11 @@ class Article
      */
     private $commentaries;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $backgroundName = NULL;
+
     public function getSlug(): ?string {
 
         return ( new Slugify() )->slugify( $this->title ) ;
@@ -266,5 +271,17 @@ class Article
         $timestampUnixFromCreateArticle = ( ( new \DateTime() )->getTimestamp() ) - ( $this->createAt->getTimestamp() ) ;
 
         return $timestampUnixFromCreateArticle / 60 / 60 / 24 ;
+    }
+
+    public function getBackgroundName(): ?string
+    {
+        return $this->backgroundName;
+    }
+
+    public function setBackgroundName(?string $backgroundName): self
+    {
+        $this->backgroundName = $backgroundName;
+
+        return $this;
     }
 }

@@ -261,6 +261,7 @@ class UserController extends AbstractController
                     $user->setAvatarName( $status ) ;
                 } else {
 
+                    // @TODO: implements an logger interface
                     $this->addFlash('error' , 'cant change avatar') ;
                 }
             }
