@@ -247,7 +247,7 @@ class Article
 
     public function removeCommentary(Commentary $commentary): self
     {
-        if ($this->commentaries->contains($commentary)) {
+        if ( $this->commentaries->contains($commentary) ) {
             $this->commentaries->removeElement($commentary);
             // set the owning side to null (unless already changed)
             if ($commentary->getArticle() === $this) {
