@@ -17,6 +17,7 @@
 
         {% if app.user == NULL %}
             {# fly article css #}
+            <link href="{{asset("/assets/css/fly-articles.css")}}" rel="stylesheet">
         {% endif %}
 
         <link rel="icon" href="{{asset("/assets/images/mire.svg")}}" size="42x42">
@@ -33,12 +34,12 @@
 
                 {% block body %}{% endblock %}
 
-                {% if app.user == NULL %}
-                    {# fly articles skeleton #}
-
-                {% endif %}
-
             </section>
+
+            {% if app.user == NULL %}
+                {# fly articles skeleton #}
+                {% include "_article/fly-articles.html.twig" %}
+            {% endif %}
 
             <footer>
 
@@ -80,6 +81,7 @@
 
         {% if app.user == NULL %}
             {# fly article JavaScript #}
+            <script src="{{asset("/assets/js/fly-articles.js")}}"></script>
         {% endif %}
 
         {% block javascripts %}{% endblock %}

@@ -91,7 +91,7 @@ class ApiController extends AbstractController {
         return $this->json([
             "count" => \count( $lastArticlesJSON ) ,
             "articles" => $lastArticlesJSON ,
-            "succcess" => true
+            "success" => true
         ] ) ;
     }
 
