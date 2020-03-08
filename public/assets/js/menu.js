@@ -3,6 +3,8 @@
     document.addEventListener('DOMContentLoaded' , () => {
 
         const iconSearch = document.querySelector('.search-icon i') ;
+
+        const iconLoad = document.querySelector('#content-search form button i.load-icon') ;
         const contentSearch = document.querySelector('#content-search') ;
         const formSearch = document.querySelector('#content-search form') ;
         const inputSearch = document.querySelector('#content-search form input#search') ;
@@ -11,7 +13,6 @@
         const resultUser = document.querySelector('#result-user') ;
         const contentResult = document.querySelector('#content-result') ;
         const iconSubmit = document.querySelector('#content-search form button i.search-icon') ;
-        const iconLoad = document.querySelector('#content-search form button i.load-icon') ;
         const buttonSubmit = document.querySelector('#content-search form button[type="submit"]') ;
 
         const TIMEOUT_ANIMATION_ERROR_CSS = 330 ;
@@ -58,9 +59,10 @@
                 buttonSubmit.classList.add('error') ;
 
                 setTimeout(() => {
-                    // remove class for can repeat animation
+                    // remove class for can repeat animation error after time css animation
                     buttonSubmit.classList.remove('error') ;
                 }, TIMEOUT_ANIMATION_ERROR_CSS );
+
                 return ;
             }
 
@@ -68,6 +70,8 @@
 
             iconSubmit.classList.add('hide') ;
             iconLoad.classList.add('load-icon-open') ;
+            iconLoad.classList.remove('hide') ;
+
 
             resultArticle.innerHTML = "" ;
             resultUser.innerHTML = "" ;
@@ -105,6 +109,7 @@
 
                         iconSubmit.classList.remove('hide') ;
                         iconLoad.classList.remove('load-icon-open') ;
+                        iconLoad.classList.add('hide') ;
                         contentSearch.classList.add('result') ;
                         isLoadSearch = false ;
 
