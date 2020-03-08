@@ -346,7 +346,7 @@ class UserController extends AbstractController
      */
     public function myArticles() {
 
-        $articles = $this->getUser()->getArticles() ;
+        $articles = $this->getUser()->getArticlesVisible() ;
 
         return $this->render('user/my-articles.html.twig' , [
             "user" => $this->getUser() ,
