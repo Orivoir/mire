@@ -36,19 +36,19 @@ class RegistrationFormType extends AbstractType
                         'maxMessage' => "password max size is 42 characters"
                     ] ) ,
                     new NotBlank() ,
-                    new EqualTo( [
-                        "propertyPath"=>"password" ,
-                        "message" => "password cant be diff"
-                    ] )
+                    // new EqualTo( [
+                    //     "propertyPath"=>"password" ,
+                    //     "message" => "password cant be diff"
+                    // ] )
                 ]
             ] )
             ->add('password', PasswordType::class , [
                 "required" => false ,
                 "constraints" => [
-                    new EqualTo( [
-                        "propertyPath" => "plainPassword" ,
-                        "message" => "password cant be diff"
-                    ] )
+                    // new EqualTo( [
+                    //     "propertyPath" => "plainPassword" ,
+                    //     "message" => "password cant be diff"
+                    // ] )
                 ]
             ] )
         ;

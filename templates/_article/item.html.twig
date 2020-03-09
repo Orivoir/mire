@@ -1,24 +1,4 @@
-{% if article.backgroundName != NULL %}
-
-    {# attach background image then exists #}
-    <style>
-
-        #wrap-article-{{article.id}} {
-
-            background-image: url( '{{ asset("/assets/uploads/articles/" ~ article.backgroundName ) }}' ) ;
-            background-size: cover;
-            background-repeat: no-repeat;
-
-        }
-
-        #article-{{article.id}} {
-
-            background-color: rgba( 42,42,42,.8 );
-        }
-
-    </style>
-
-{% endif %}
+{% include "_css/background-image-article.html.twig" %}
 
 <li
     class="article-item {{article.id % 2 == 0 ? "even"}}"

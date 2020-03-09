@@ -8,6 +8,7 @@ use App\Entity\Commentary;
 use App\Services\FileUploader;
 use Doctrine\ORM\EntityManager;
 use App\Form\CommentaryFormType;
+use App\Form\SettingsArticleFormType;
 use App\Repository\ArticleRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,6 +40,91 @@ class ArticleController extends AbstractController
 
         return $this->render('article/index.html.twig' , [
             "articles" => $range
+        ] ) ;
+    }
+
+    /**
+     * @Route("/article/settings/{slug}/{id}" , name="app_article_settings" )
+     */
+    public function settings(
+        string $slug ,
+        int $id ,
+        ArticleRepository $articleRep ,
+        Request $rq
+    ) {
+
+        $article = $articleRep->find( $id ) ;
+
+        if( !$article || $article->getIsRemove() ) {
+
+            return $this->render('not-found.html.twig') ;
+
+        } else if(
+            $article->getUser()->getId() !== $this->getUser()->getId()
+        ) {
+
+            return $this->render('not-found.html.twig') ;
+        }
+
+        $articleSettingsForm = $this->createForm( SettingsArticleFormType::class , $article ) ;
+
+        $articleSettingsForm->handleRequest( $rq ) ;
+
+        if( $articleSettingsForm->isSubmitted() && $articleSettingsForm->isValid() ) {
+
+            $background = $articleSettingsForm->get('background')->getData() ;
+
+            if( $background ) {
+
+                // remove current background if exists
+                if( $article->getBackgroundName() != NULL ) {
+
+                    // remove background image from: 'uploads_bg_article' directory
+
+                    $uploadsBackgroundDirectory = $this->getParameter('uploads_bg_article') ;
+
+                    $filepath = $uploadsBackgroundDirectory . '/' . $article->getBackgroundName() ;
+
+                    $isRemoveBackground = \unlink( $filepath ) ;
+
+                    // if remove background have fail
+                    if( $isRemoveBackground ) {
+
+                        // @TODO: implement logger interface
+                    }
+                }
+
+                $fileUp = new FileUploader( $this->getParameter('uploads_bg_article') ) ;
+
+                $filename = $fileUp->upload( $background ) ;
+
+                if( !!$filename ) {
+
+                    $article->setBackgroundName( $filename ) ;
+
+                } else {
+
+                    // @TODO: implements an logger interface
+                    $this->addFlash('error' , 'background article cant be uploads' ) ;
+                }
+            }
+
+            $em = $this->getDoctrine()->getManager() ;
+
+            $em->persist( $article ) ;
+
+            $em->flush() ;
+
+            $this->addFlash('success' , 'article update success') ;
+
+            return $this->redirectToRoute('app_article_details' , [
+                "slug" => $article->getSlug() ,
+                "id" => $article->getId()
+            ] ) ;
+        }
+
+        return $this->render('article/settings.html.twig' , [
+            "articleSettingsForm" => $articleSettingsForm->createView()
         ] ) ;
     }
 

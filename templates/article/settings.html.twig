@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block title %}settings article{% endblock %}
+
+{% block body %}
+
+    <body>
+
+        {{form_start( articleSettingsForm )}}
+
+            {{ form_widget( articleSettingsForm ) }}
+
+            <button
+                type="submit"
+                class="btn blue"
+            >
+                update
+            </button>
+
+        {{form_end( articleSettingsForm )}}
+
+    </body>
+
+{% endblock %}

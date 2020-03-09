@@ -1,0 +1,22 @@
+{% if article is defined and article.backgroundName != NULL %}
+
+    {# attach background image then exists #}
+    <style>
+
+        #wrap-article-{{article.id}} {
+
+            background-image: url( '{{ asset("/assets/uploads/articles/" ~ article.backgroundName ) }}' ) ;
+            background-size: cover;
+            background-repeat: no-repeat;
+
+        }
+
+        #article-{{article.id}} {
+
+            color: #fff;
+            background-color: rgba( 42,42,42, {{article.opacity}} );
+        }
+
+    </style>
+
+{% endif %}
