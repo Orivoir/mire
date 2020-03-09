@@ -1,9 +1,15 @@
 {% include "_css/background-image-article.html.twig" %}
 
 <li
-    class="article-item {{article.id % 2 == 0 ? "even"}}"
+    class="article-item {{article.backgroundName != NULL ? "background-custom": ""}} {{article.id % 2 == 0 ? "even"}}"
     id="wrap-article-{{article.id}}"
 >
+
+    {% if article.backgroundName != NULL %}
+        <div class="opacity-bar-outer">
+            <div class="opacity-bar-inner"></div>
+        </div>
+    {% endif %}
 
     <section
         id="article-{{article.id}}"
@@ -50,28 +56,29 @@
                     {{article.commentaries|length}} commentar{{ article.commentaries|length > 1 ? "ies": "y" }}
                 </p>
 
-                <p>
-                {% if isAuthor is not defined or isAuthor == false %}
-                    <a href="{{path("app_article_details" , {
-                        "slug": article.slug ,
-                        "id": article.id
-                    } )}}"
-                    class="btn blue-outline"
-                    >
-                        learn more
-                    </a>
-                {% endif %}
-                </p>
             </div>
 
         </aside>
 
-        {% if isAuthor is defined and isAuthor == true %}
+        <footer>
+        {% if app.user != NULL and article.user.id == app.user.id %}
 
-            <footer>
-                {% include "_menu/article.html.twig" %}
-            </footer>
+            {% include "_menu/article.html.twig" %}
+
+        {% else %}
+
+            <p>
+                <a href="{{path("app_article_details" , {
+                    "slug": article.slug ,
+                    "id": article.id
+                } )}}"
+                class="btn blue-outline"
+                >
+                    learn more
+                </a>
+            </p>
         {% endif %}
+        </footer>
 
     </section>
 

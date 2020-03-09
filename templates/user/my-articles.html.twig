@@ -1,5 +1,9 @@
 {% extends "base.html.twig" %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset("/assets/css/article-item.css")}}">
+{% endblock %}
+
 {% block body %}
 
     <section class="my-articles">
@@ -25,5 +29,6 @@
 {% block javascripts %}
 
     <script src="{{asset("/assets/js/menu-article.js")}}"></script>
+    <script src="{{asset("/assets/js/opacity-article.js")}}"></script>
 
 {% endblock %}
