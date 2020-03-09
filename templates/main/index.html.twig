@@ -4,6 +4,7 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{asset("assets/css/hero-banner.css")}}">
+    <link rel="stylesheet" href="{{asset("/assets/css/article-item.css")}}">
 {% endblock %}
 
 {% block body %}
@@ -57,4 +58,8 @@
 
     </section>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{asset("/assets/js/opacity-article.js")}}"></script>
 {% endblock %}
