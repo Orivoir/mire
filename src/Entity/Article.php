@@ -83,6 +83,11 @@ class Article
      */
     private $backgroundName = NULL;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $opacity = .5;
+
     public function getSlug(): ?string {
 
         return ( new Slugify() )->slugify( $this->title ) ;
@@ -281,6 +286,18 @@ class Article
     public function setBackgroundName(?string $backgroundName): self
     {
         $this->backgroundName = $backgroundName;
+
+        return $this;
+    }
+
+    public function getOpacity(): ?float
+    {
+        return $this->opacity;
+    }
+
+    public function setOpacity(float $opacity): self
+    {
+        $this->opacity = $opacity;
 
         return $this;
     }

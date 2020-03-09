@@ -1,7 +1,8 @@
 .article-wrap {
 
-    background :rgb( 220,220,220 );
+    /* background :rgb( 220,220,220 ); */
     width: 65%;
+    min-height: 50vh;
     border-radius: 5px;
     margin: 4vh auto;
     min-width: 330px;
@@ -38,7 +39,8 @@
 
 .article-wrap .article-content {
 
-    margin: 2.85vh 0;
+    margin: 1vh 3vw;
+    padding: 5vh 0;
     letter-spacing: .2rem;
     line-height: 2.55rem;
     font-size: 20px;
@@ -67,12 +69,12 @@
 
     margin: 0;
     padding: 0;
-    color: rgb( 42,42,42 ) ;
+    /* color: rgb( 42,42,42 ) ; */
 }
 
 .article-wrap header a {
 
-    color: rgb( 42,42,42 ) ;
+    color: rgb( 185,185,185 ) ;
 }
 
 .article-wrap header h2 {

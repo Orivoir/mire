@@ -10,38 +10,45 @@
 
 {% block body %}
 
-    <section class="article-wrap" id="article-{{article.id}}">
+    {% include "_css/background-image-article-details.html.twig" %}
 
+    <section class="article-wrap" id="wrap-article-{{article.id}}">
+
+        <div id="article-{{article.id}}">
+            <header>
+                <h1>
+                    {{article.title}}
+                </h1>
+
+                <div>
+                    <blockquote>
+                        {{article.createAt|date('d/m/Y H:i/s')}}
+                    </blockquote>
+
+                    <h2>
+                        Author:
+                        <a href="{{path("app_user_profil" , {
+                            username: article.user.username
+                        } )}}">
+                            {{article.user.username}}
+                        </a>
+                    </h2>
+                </div>
+
+            </header>
+
+            <p class="article-content">
+                {{article.content}}
+            </p>
+        </div>
+
+
+    </section>
+
+    <section>
         <header>
-            <h1>
-                {{article.title}}
-            </h1>
 
-            <div>
-                <blockquote>
-                    {{article.createAt|date('d/m/Y H:i/s')}}
-                </blockquote>
-
-                <h2>
-                    Author:
-                    <a href="{{path("app_user_profil" , {
-                        username: article.user.username
-                    } )}}">
-                        {{article.user.username}}
-                    </a>
-                </h2>
-            </div>
-
-        </header>
-
-        <p class="article-content">
-            {{article.content}}
-        </p>
-
-        <aside>
-
-            {# fix not count remove commentaries #}
-            <h3> {{commentaries|length}} commentaries</h3>
+            <h2> {{commentaries|length}} commentaries</h2>
 
             {% if commentaries|length != 0  %}
                 <ul class="commentaries-list">
@@ -69,7 +76,7 @@
 
             {% endif %}
 
-        </aside>
+        </header>
 
         {% if app.user == NULL %}
             <footer>
@@ -98,7 +105,6 @@
                 </ul>
             </footer>
         {% endif %}
-
 
     </section>
 

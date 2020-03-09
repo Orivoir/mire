@@ -4,7 +4,10 @@
 
         <li>
             <a
-                href=""
+                href="{{path("app_article_settings" , {
+                    "slug": article.slug ,
+                    "id": article.id
+                } ) }}"
                 class="btn blue-outline"
             >
                 edit
