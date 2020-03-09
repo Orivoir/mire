@@ -6,6 +6,7 @@
 
 {% block stylesheets %}
     <link rel='stylesheet' href="{{asset('assets/css/article-details.css')}}">
+    <link rel='stylesheet' href="{{asset('assets/css/commentary-item.css')}}">
 {% endblock %}
 
 {% block body %}
@@ -45,23 +46,11 @@
 
     </section>
 
-    <section>
+    <section class="commentaries-wrap">
+
         <header>
 
             <h2> {{commentaries|length}} commentaries</h2>
-
-            {% if commentaries|length != 0  %}
-                <ul class="commentaries-list">
-                    {% for commentary in commentaries  %}
-
-                        {% if commentary.isRemove == false %}
-                            {% include "_commentaries/item.html.twig" %}
-                        {% endif %}
-
-
-                    {% endfor %}
-                </ul>
-            {% endif %}
 
             {# valid account for post an comment #}
             {% if app.user != NULL and app.user.isValid %}
@@ -74,6 +63,19 @@
 
                 {% include "_form/commentaries.html.twig" %}
 
+            {% endif %}
+
+            {% if commentaries|length != 0  %}
+                <ul class="commentaries-list">
+                    {% for commentary in commentaries  %}
+
+                        {% if commentary.isRemove == false %}
+                            {% include "_commentaries/item.html.twig" %}
+                        {% endif %}
+
+
+                    {% endfor %}
+                </ul>
             {% endif %}
 
         </header>

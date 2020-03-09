@@ -1,0 +1,58 @@
+.commentary-item {
+
+    background: #fff;
+    color: #000;
+    width: 80%;
+    margin: 3vh auto;
+    padding: .85vh 1.2vw;
+    border-radius: 3px;
+}
+
+.commentary-item a {
+
+    color: rgb( 42,42,42 ) ;
+    transition: .13s ease-in-out all;
+}
+
+
+.commentary-item a:hover {
+
+    color: rgb( 70,70,70 ) ;
+}
+
+.commentary-item blockquote {
+
+    color: rgb( 95,95,95 ) ;
+}
+
+.commentary-item .commentary-content {
+
+    font-size: 18px;
+    letter-spacing: .13rem;
+    word-break: break-all;
+    padding: 2.3vh 0;
+}
+
+.commentary-item header {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.commentary-item header h1 {
+
+    position: relative;
+}
+
+.commentary-item header h1::before {
+
+    content: "";
+    position: absolute;
+
+    height: 100%;
+    width: 6px;
+    left: 0;
+    transform: translateX( -12px );
+    background: #2ecc71;
+}
