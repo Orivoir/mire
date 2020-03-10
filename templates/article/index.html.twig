@@ -19,7 +19,7 @@
         {% for article in articles %}
 
             {% if article.isRemove == false %}
-                {% include "_article/item.html.twig" with { isAuthor: true } %}
+                {% include "_article/item.html.twig" %}
             {% endif %}
 
         {% endfor %}

@@ -19,13 +19,12 @@ class ArticleController extends AbstractController
 {
 
     /**
-     * @Route("/a/{page}", name="app_article_index")
+     * @Route("/a/{page}", methods={"GET"} , name="app_article_index")
      */
     public function index(
         ?int $page = 1,
         ArticleRepository $articleRep ,
-        PaginatorInterface $paginator ,
-        Request $rq
+        PaginatorInterface $paginator
     ) {
 
         $queryArticles = $articleRep->getAllVisibleQuery( 500 ) ;
