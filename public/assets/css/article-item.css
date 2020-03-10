@@ -3,6 +3,11 @@
     position: relative;
 }
 
+.article-item section {
+
+    padding: .9vh .9vw ;
+}
+
 .article-item .opacity-bar-outer {
 
     position: absolute;
